@@ -24,7 +24,7 @@ export default function configureStore(initialState) {
       applyMiddleware(...middlewares),
       devTools({
         name: Platform.OS,
-        hostname: '172.168.1.108',
+        hostname: '192.168.1.59',
         port: 5678,
         realtime: true,
       })

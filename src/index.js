@@ -1,4 +1,4 @@
-import React,{
+import React, {
   Component
 } from 'react';
 import { Provider } from 'react-redux';
@@ -7,15 +7,15 @@ import AppContainer from './containers/App';
 
 const store = configureStore();
 
-class App extends Component {
+class One extends Component {
   render() {
     return (
       <Provider store={store}>
-        <AppContainer/>
+        <AppContainer />
       </Provider>
     );
   }
 }
 
 
-export default App;
+export default One;
