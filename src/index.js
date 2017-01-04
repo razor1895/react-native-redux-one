@@ -1,13 +1,13 @@
 import React, {
   Component
 } from 'react';
-import { Provider } from 'react-redux';
-import configureStore from './store/configureStore';
+// import { Provider } from 'react-redux';
+// import configureStore from './store/configureStore';
 import AppContainer from './containers/App';
 
-const store = configureStore();
+// const store = configureStore();
 
-class One extends Component {
+/*class One extends Component {
   render() {
     return (
       <Provider store={store}>
@@ -15,7 +15,8 @@ class One extends Component {
       </Provider>
     );
   }
-}
+}*/
 
+const One = () => <AppContainer />;
 
 export default One;
