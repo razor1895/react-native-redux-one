@@ -42,7 +42,7 @@ buck-out/
 *.keystore
 
 #vscode
-.jsconfig
+jsconfig.json
 typings
 .vscode
 

@@ -1,19 +1,13 @@
 import { Platform } from 'react-native';
 import { createStore, applyMiddleware, compose } from 'redux';
-import thunkMiddleware from 'redux-thunk';
-import reducers from '../reducers';
 import devTools from 'remote-redux-devtools';
+import asyncThunkMiddleware from 'redux-async-thunk';
+import reducers from '../reducers';
 
 const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent;
 const middlewares = [
   thunkMiddleware,
 ];
-
-
-if (isDebuggingInChrome) {
-  // middlewares.push(logger);
-}
-
 
 export default function configureStore(initialState) {
   const store = createStore(
@@ -24,7 +18,7 @@ export default function configureStore(initialState) {
       applyMiddleware(...middlewares),
       devTools({
         name: Platform.OS,
-        hostname: '192.168.1.59',
+        hostname: 'localhost',
         port: 5678,
         realtime: true,
       })
@@ -33,7 +27,7 @@ export default function configureStore(initialState) {
 
   if (module.hot) {
     module.hot.accept(() => {
-      const nextRootReducer = require('../Reducers/index').default;
+      const nextRootReducer = require('../reducers/index').default;
       store.replaceReducer(nextRootReducer);
     });
   }
