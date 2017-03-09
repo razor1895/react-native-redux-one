@@ -1,18 +1,18 @@
+import Immutable from 'immutable';
+import { createReducer } from 'redux-immutablejs';
 import * as types from '../constants/ActionTypes';
 
-const initialState = {
-  isUserLoggedIn: false,
-};
+const initialState = Immutable.fromJS({ isAuth: false });
 
-export default function user(state = initialState, action) {
-  switch (action.type) {
-    case types.LOGGED_IN:
-      return {
-        ...state,
-        isUserLoggedIn: true,
-      };
+export default createReducer(initialState, {
+  [types.LOGIN]: (state, action) => state.merge({
+    isAuth: true,
+    token: action.payload.token
+  }),
 
-    default:
-      return state;
-  }
-}
+  [types.LOGOUT]: (domain) => domain.merge({
+    isAuth: false,
+    current_identity: {},
+    token: undefined
+  })
+});

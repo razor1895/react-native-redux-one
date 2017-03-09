@@ -1,27 +1,25 @@
+import Immutable from 'immutable';
 import { Platform } from 'react-native';
-import { createStore, applyMiddleware, compose } from 'redux';
-import devTools from 'remote-redux-devtools';
+import { composeWithDevTools } from 'remote-redux-devtools';
 import asyncThunkMiddleware from 'redux-async-thunk';
+import { createStore, applyMiddleware } from 'redux';
 import reducers from '../reducers';
 
 const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent;
 const middlewares = [
-  thunkMiddleware,
+  asyncThunkMiddleware,
 ];
 
-export default function configureStore(initialState) {
+export default function configureStore() {
+  const state = Immutable.fromJS({});
+  const composeEnhancers = composeWithDevTools({ realtime: true, port: 5678 });
+
   const store = createStore(
     reducers,
-    initialState,
+    state,
     // applyMiddleware(...middlewares),
-    compose(
-      applyMiddleware(...middlewares),
-      devTools({
-        name: Platform.OS,
-        hostname: 'localhost',
-        port: 5678,
-        realtime: true,
-      })
+    composeEnhancers(
+      applyMiddleware(...middlewares)
    )
   );
 
