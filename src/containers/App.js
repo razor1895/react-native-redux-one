@@ -7,42 +7,46 @@ import {
   StyleSheet,
   Text,
 } from 'react-native';
+import {
+  NavigationActions,
+  addNavigationHelpers,
+  StackNavigator,
+} from 'react-navigation';
+import { connect } from 'react-redux';
+
+import HomeScreen from './Home';
+import ReadingScreen from './Reading';
+import MusicScreen from './Music';
+import MovieScreen from './Movie';
 
 const ratio = PixelRatio.get() > 2 ? PixelRatio.get() : 3;
 
-const styles = StyleSheet.create({
-  slideItem: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgb(250,252,255)',
+const AppNavigator = TabNavigator({
+  HomeTab: {
+    screen: HomeScreen,
+    path: '/Home',
+    navigationOptions: {
+      tabBar: () => ({
+        label: '首页',
+        icon: ({ tintColor, focused }) => (
+          <Ionicons
+            name={focused ? 'ios-settings' : 'ios-settings-outline'}
+            size={26}
+            style={{ color: tintColor }}
+          />
+        ),
+      }),
+    },
   },
-  slideItemImage: {
-    width: 1024 / ratio,
-    height: 1024 / ratio,
-    resizeMode: 'cover',
-  },
-  dotStyle: {
-    width: 15 / ratio,
-    height: 15 / ratio,
-    borderRadius: 7.5 / ratio,
-  },
-  activeDotStyle: {
-    width: 15 / ratio,
-    height: 15 / ratio,
-    borderRadius: 7.5 / ratio,
-    backgroundColor: 'rgb(108,122,147)',
-  }
+  ReadingTab: { screen: ReadingScreen },
+  MusicTab: { screen: MusicScreen },
+  MovieTab: { screen: MovieScreen },
 });
 
-class App extends Component {
-  render() {
-    return (
-      <View style={styles.slideItem}>
-        <Text>hello, world</Text>
-      </View>
-    );
-  }
-}
+const App = connect(state => ({
+  nav: state.get('nav').toJS(),
+}))(({ dispatch, nav }) => (
+  <AppNavigator navigation={addNavigationHelpers({ dispatch, state: nav })} />
+));
 
 export default App;
