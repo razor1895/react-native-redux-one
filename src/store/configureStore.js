@@ -1,5 +1,4 @@
 import Immutable from 'immutable';
-import { Platform } from 'react-native';
 import { composeWithDevTools } from 'remote-redux-devtools';
 import asyncThunkMiddleware from 'redux-async-thunk';
 import { createStore, applyMiddleware } from 'redux';
