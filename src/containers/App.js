@@ -6,11 +6,12 @@ import {
   PixelRatio,
   StyleSheet,
   Text,
+  Image
 } from 'react-native';
 import {
   NavigationActions,
   addNavigationHelpers,
-  StackNavigator,
+  TabNavigator,
 } from 'react-navigation';
 import { connect } from 'react-redux';
 
@@ -18,8 +19,16 @@ import HomeScreen from './Home';
 import ReadingScreen from './Reading';
 import MusicScreen from './Music';
 import MovieScreen from './Movie';
+import * as Icons from '../images/Icon';
 
 const ratio = PixelRatio.get() > 2 ? PixelRatio.get() : 3;
+const styles = StyleSheet.create({
+  tabIcon: {
+    width: 90,
+    height: 49,
+    resizeMode: 'cover'
+  },
+});
 
 const AppNavigator = TabNavigator({
   HomeTab: {
@@ -27,12 +36,11 @@ const AppNavigator = TabNavigator({
     path: '/Home',
     navigationOptions: {
       tabBar: () => ({
-        label: '首页',
-        icon: ({ tintColor, focused }) => (
-          <Ionicons
-            name={focused ? 'ios-settings' : 'ios-settings-outline'}
-            size={26}
-            style={{ color: tintColor }}
+        label: ' ',
+        icon: ({ tintColor }) => (
+          <Image
+            source={Icons.home}
+            style={styles.tabIcon}
           />
         ),
       }),

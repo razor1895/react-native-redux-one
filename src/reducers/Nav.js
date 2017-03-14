@@ -3,12 +3,12 @@ import { createReducer } from 'redux-immutablejs';
 import * as types from '../constants/ActionTypes';
 
 const initialState = Immutable.fromJS({
-  index: 1,
+  index: 0,
   routes: [
-    { key: 'one_home', routeName: 'Home' },
-    { key: 'one_reading', routeName: 'Reading' },
-    { key: 'one_music', routeName: 'Music' },
-    { key: 'one_movie', routeName: 'Movie' }
+    { key: 'one_home', routeName: 'HomeTab' },
+    { key: 'one_reading', routeName: 'ReadingTab' },
+    { key: 'one_music', routeName: 'MusicTab' },
+    { key: 'one_movie', routeName: 'MovieTab' }
   ]
 });
 

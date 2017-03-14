@@ -21,8 +21,4 @@ const HomeScreen = ({ navigation }) => (
   </View>
 );
 
-HomeScreen.navigationOptions = {
-  title: '首页',
-};
-
 export default HomeScreen;
