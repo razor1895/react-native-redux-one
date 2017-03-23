@@ -6,6 +6,7 @@ const music = require('./music.png');
 const musicActive = require('./music_active.png');
 const movie = require('./movie.png');
 const movieActive = require('./movie_active.png');
+const search = require('./search.png');
 
 export {
   home,
@@ -15,5 +16,6 @@ export {
   music,
   musicActive,
   movie,
-  movieActive
+  movieActive,
+  search
 };

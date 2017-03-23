@@ -1,17 +1,20 @@
 import Immutable from 'immutable';
-import { composeWithDevTools } from 'remote-redux-devtools';
 import asyncThunkMiddleware from 'redux-async-thunk';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import reducers from '../reducers';
 
 const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent;
 const middlewares = [
   asyncThunkMiddleware,
 ];
+const composeEnhancers = typeof window === 'object' &&
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+      // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
+    }) : compose;
 
 export default function configureStore() {
   const state = Immutable.fromJS({});
-  const composeEnhancers = composeWithDevTools({ realtime: true, port: 5678 });
 
   const store = createStore(
     reducers,

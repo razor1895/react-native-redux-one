@@ -2,27 +2,44 @@ import React from 'react';
 import {
   View,
   Text,
-  StyleSheet
+  StyleSheet,
+  Image
 } from 'react-native';
+import * as Icons from '../images/Icon';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  headerIcon: {
+    resizeMode: 'contain',
+    width: 24,
+    height: 24,
   }
 });
 
-const MovieScreen = ({ navigation }) => (
-  <View style={styles.container}>
-    <Text>
-      阅读
-    </Text>
-  </View>
-);
+class MovieScreen extends React.Component {
+  static navigationOptions = {
+    title: '一个影视',
+    header: {
+      visible: true
+    },
+    tabBar: {
+      visible: false
+    }
+  }
 
-MovieScreen.navigationOptions = {
-  title: '阅读',
-};
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text>
+          影视
+        </Text>
+      </View>
+    );
+  }
+}
 
 export default MovieScreen;
