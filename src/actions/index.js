@@ -8,3 +8,20 @@ export function searchUsers(query) {
     }
   };
 }
+
+export const requestReadingFeedsList = (startId, params) => ({
+  type: ActionTypes.REQUESTED_READING_FEEDS_LIST,
+  payload: {
+    startId,
+    params
+  }
+});
+
+
+export const receiveReadingFeedsList = (startId, dataList) => ({
+  type: ActionTypes.RECEIVED_READING_FEEDS_LIST,
+  payload: {
+    startId,
+    dataList
+  }
+});
