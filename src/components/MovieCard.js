@@ -8,6 +8,7 @@ import {
   Image
 } from 'react-native';
 import { heart, heartFilled, share, movieBackground } from '../images';
+import { formatDate } from '../utils';
 
 const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
@@ -123,7 +124,7 @@ export default ({ data }) => (
     <Text style={styles.brief}>{data.get('forward')}</Text>
     <Text style={styles.movieName}>——《{data.get('subtitle').split(':')[1]}》</Text>
     <View style={styles.bottom}>
-      <Text style={styles.time}>15小时前</Text>
+      <Text style={styles.time}>{formatDate(data.get('post_date'))}</Text>
       <View style={styles.buttonGroup}>
         <Text style={styles.heartsCount}>{data.get('like_count')}</Text>
         <Image style={styles.heart} source={heart} />
