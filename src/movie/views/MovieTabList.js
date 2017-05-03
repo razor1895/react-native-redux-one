@@ -52,7 +52,7 @@ class MovieList extends Component {
   }
 
   componentDidMount() {
-    this.props.requestMovieFeedsList(0, { platform: Platform.os });
+    this.props.requestMovieFeedsList(0, { platform: Platform.OS });
   }
   
   render() {

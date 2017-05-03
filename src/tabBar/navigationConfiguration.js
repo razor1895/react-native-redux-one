@@ -73,8 +73,8 @@ const routeConfiguration = {
 const tabBarConfiguration = {
   // tabBarComponent: TabView.TabBarBottom,
   tabBarPosition: 'bottom',
-  // animationEnabled: false,
-  // swipeEnabled: false,
+  animationEnabled: false,
+  swipeEnabled: false,
   lazyLoad: true,
   tabBarOptions: {
     activeTintColor: '#8a8989',
