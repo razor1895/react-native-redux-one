@@ -42,7 +42,6 @@ class ReadingList extends Component {
 
   constructor(props) {
     super(props);
-    console.log(props);
     const dataSource = new ListView.DataSource({
       rowHasChanged: (r1, r2) => !Immutable.is(r1, r2)
     });
