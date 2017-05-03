@@ -64,3 +64,31 @@ export const receiveMovieFeedsList = (startId, dataList) => ({
     dataList
   }
 });
+
+/**
+* @function requestMusicFeedsList
+* @param  {int} startId {起始ID，用于分页请求数据}
+* @param  {object} params  {uuid, user_id, platform, version}
+* @return {object} {type, payload}
+*/
+export const requestMusicFeedsList = (startId, params) => ({
+  type: ActionTypes.REQUESTED_MUSIC_FEEDS_LIST,
+  payload: {
+    startId,
+    params
+  }
+});
+
+/**
+* @function receiveMusicFeedsList
+* @param  {int} startId  {起始ID，用于分页请求数据}
+* @param  {array} dataList {接口返回的音乐列表数据}
+* @return {object} {type, payload}
+*/
+export const receiveMusicFeedsList = (startId, dataList) => ({
+  type: ActionTypes.RECEIVED_MUSIC_FEEDS_LIST,
+  payload: {
+    startId,
+    dataList
+  }
+});

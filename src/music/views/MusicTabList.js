@@ -3,10 +3,14 @@ import {
   View,
   StyleSheet,
   Image,
-  ListView
+  ListView,
+  Platform
 } from 'react-native';
+import { connect } from 'react-redux';
+import Immutable from 'immutable';
 import MusicCard from '../../components/MusicCard';
 import { search, user } from '../../images';
+import { requestMusicFeedsList } from '../../actions';
 
 const styles = StyleSheet.create({
   container: {
@@ -29,7 +33,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class MusicList extends Component {
+class MusicList extends Component {
   static navigationOptions = {
     title: '一个音乐',
     headerTintColor: '#b4b4b4',
@@ -39,22 +43,34 @@ export default class MusicList extends Component {
 
   constructor(props) {
     super(props);
-    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+    const dataSource = new ListView.DataSource({
+      rowHasChanged: (r1, r2) => !Immutable.is(r1, r2)
+    });
     this.state = {
-      dataSource: ds.cloneWithRows([
-        'John', 'Joel', 'James', 'Jimmy', 'Jackson', 'Jillian', 'Julie', 'Devin'
-      ])
+      dataSource,
     };
   }
-  
+
+  componentDidMount() {
+    this.props.requestMusicFeedsList(0, { platform: Platform.OS });
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <ListView
-          dataSource={this.state.dataSource}
+          dataSource={this.state.dataSource.cloneWithRows(this.props.music.get('feedsList').toArray())}
           renderRow={rowData => <MusicCard data={rowData} />}
+          enableEmptySections
         />
       </View>
     );
   }
 }
+
+export default connect(
+  state => ({
+    music: state.get('music')
+  }),
+  { requestMusicFeedsList }
+)(MusicList);

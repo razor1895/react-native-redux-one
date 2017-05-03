@@ -104,9 +104,10 @@ const styles = StyleSheet.create({
   },
   musicInfo: {
     color: '#ddd',
-    fontSize: 8.4,
+    fontSize: 10,
     paddingLeft: 40,
     marginBottom: 15,
+    width: width - 55
   },
   bottom: {
     flexDirection: 'row',
@@ -146,26 +147,32 @@ const styles = StyleSheet.create({
   }
 });
 
-export default props => (
+export default ({ data }) => (
   <View style={styles.cardContainer}>
-    <Text style={styles.label}>- {props.data} -</Text>
-    <Text style={styles.title}>大多数人都相同，喜欢的只是爱情的脸孔</Text>
-    <Text style={styles.info}>文 / 阿芙拉</Text>
+    <Text style={styles.label}>- {data.get('tag_list').size === 0 ? '音乐' : data.get('tag_list').get(0).get('title')} -</Text>
+    <Text style={styles.title}>{data.get('title')}</Text>
+    <Text style={styles.info}>文 / {data.get('author').get('user_name')}</Text>
     <View style={styles.musicGroup}>
       <Image style={styles.musicBackground} source={musicBackground} >
-        <Image style={styles.copyright} source={xiamiCopyright}/>
-        <Image style={styles.cover} source={{ uri: 'https://imgsa.baidu.com/baike/crop%3D0%2C0%2C1024%2C676%3Bc0%3Dbaike116%2C5%2C5%2C116%2C38/sign=67afe829e3c4b74520dbed56f2cc3227/9345d688d43f8794c938262eda1b0ef41ad53aee.jpg' }} >
+        <Image style={styles.copyright} source={xiamiCopyright} />
+        <Image style={styles.cover} source={{ uri: data.get('img_url') }} >
           <Image style={styles.playerBtn} source={musicPlay} />
         </Image>
       </Image>
       <Image style={styles.musicStory} source={musicStory} />
     </View>
-    <Text style={styles.musicInfo}>无底洞 蔡健雅 | 幸福的天空2-我很想你</Text>
-    <Text style={styles.brief}>开心时懂得提醒自己不要忘形，受伤时亦会反省自己是否有错。</Text>
+    <Text
+      style={styles.musicInfo}
+      numberOfLines={1}
+      ellipsizeMode={'tail'}
+    >
+      {data.get('music_name')} {data.get('audio_author')} | {data.get('audio_album')}
+    </Text>
+    <Text style={styles.brief}>{data.get('forward')}</Text>
     <View style={styles.bottom}>
       <Text style={styles.time}>15小时前</Text>
       <View style={styles.buttonGroup}>
-        <Text style={styles.heartsCount}>96</Text>
+        <Text style={styles.heartsCount}>{data.get('like_count')}</Text>
         <Image style={styles.heart} source={heart} />
         <View style={styles.circle} />
         <Image style={styles.share} source={share} />
