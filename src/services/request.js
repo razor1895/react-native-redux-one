@@ -28,10 +28,8 @@ export function get(urlPath, params) {
   let url = urlPrefix + urlPath;
   const body = Object.assign({ version: rootConfig.apiVersion }, params);
 
-  if (params) {
-    const urlEncodeKeys = Object.keys(params).map(v => `${v}=${body[v]}`).join('&');
-    url += `?${urlEncodeKeys}`;
-  }
+  const urlEncodeKeys = Object.keys(body).map(v => `${v}=${body[v]}`).join('&');
+  url += `?${urlEncodeKeys}`;
 
   if (isDebuggingInChrome) {
     console.info('GET: ', url);
@@ -48,10 +46,8 @@ export function post(urlPath, params, data) {
 
   const body = Object.assign({ version: rootConfig.apiVersion }, params);
 
-  if (params) {
-    const urlEncodeKeys = Object.keys(params).map(v => `${v}=${params[v]}`).join('&');
-    url += `?${urlEncodeKeys}`;
-  }
+  const urlEncodeKeys = Object.keys(body).map(v => `${v}=${body[v]}`).join('&');
+  url += `?${urlEncodeKeys}`;
 
   if (isDebuggingInChrome) {
     console.info('postJson');
