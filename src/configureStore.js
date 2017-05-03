@@ -1,4 +1,3 @@
-import Immutable from 'immutable';
 import { createEpicMiddleware } from 'redux-observable';
 import { createStore, applyMiddleware, compose } from 'redux';
 import reducers from './reducers';
@@ -6,27 +5,25 @@ import epics from './epics';
 
 const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent;
 const epicMiddleware = createEpicMiddleware(epics);
-const middlewares = [
-  epicMiddleware,
-];
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-export default function configureStore() {
-  const state = Immutable.fromJS({});
-
+export default (preloadedState) => {
+  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
   const store = createStore(
     reducers,
-    state,
-    // applyMiddleware(...middlewares),
+    preloadedState,
     composeEnhancers(
-      applyMiddleware(...middlewares)
-   )
+      applyMiddleware(
+        epicMiddleware
+      )
+    )
   );
 
   if (module.hot) {
     module.hot.accept(() => {
       const nextRootReducer = require('./reducers/index').default;
+      const nextRootEpic = require('./epics').default;
       store.replaceReducer(nextRootReducer);
+      epicMiddleware.replaceEpic(nextRootEpic);
     });
   }
 
@@ -35,4 +32,4 @@ export default function configureStore() {
   }
 
   return store;
-}
+};
