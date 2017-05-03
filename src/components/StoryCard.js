@@ -96,17 +96,17 @@ const styles = StyleSheet.create({
   }
 });
 
-export default props => (
-  <View style={styles.cardContainer}>
-    <Text style={styles.label}>- {props.data} -</Text>
-    <Text style={styles.title}>跟女博士学看色情片</Text>
-    <Text style={styles.info}>文 / 每日人物</Text>
-    <Image style={styles.image} source={{ uri: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1493642937766&di=3fc67ff7c6fc3e88525055b9e531385b&imgtype=0&src=http%3A%2F%2Fcdn01.wallconvert.com%2F_media%2Fwallpapers_2560x1600%2F1%2F2%2Fnew-york-city-15116.jpg' }} />
-    <Text style={styles.brief} numberOfLines={2}>认识和了解身体只是最基本的，接纳和喜爱自己、学会取悦自己才是最终的目的</Text>
+export default ({ data }) => (
+  <View style={styles.cardContainer} id={data.get('id')}>
+    <Text style={styles.label}>- {data.get('tag_list').size === 0 ? '阅读' : data.get('tag_list').get(0).get('title')} -</Text>
+    <Text style={styles.title}>{data.get('title')}</Text>
+    <Text style={styles.info}>文 / {data.get('author').get('user_name')}</Text>
+    <Image style={styles.image} source={{ uri: data.get('img_url') }} />
+    <Text style={styles.brief}>{data.get('forward')}</Text>
     <View style={styles.bottom}>
       <Text style={styles.time}>12小时前</Text>
       <View style={styles.buttonGroup}>
-        <Text style={styles.heartsCount}>275</Text>
+        <Text style={styles.heartsCount}>{data.get('like_count')}</Text>
         <Image style={styles.heart} source={heart} />
         <View style={styles.circle} />
         <Image style={styles.share} source={share} />

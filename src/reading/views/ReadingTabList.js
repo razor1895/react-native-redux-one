@@ -5,8 +5,11 @@ import {
   Image,
   ListView
 } from 'react-native';
+import { connect } from 'react-redux';
+import Immutable from 'immutable';
 import StoryCard from '../../components/StoryCard';
 import { search, user } from '../../images';
+import { requestReadingFeedsList } from '../../actions';
 
 const styles = StyleSheet.create({
   container: {
@@ -39,24 +42,35 @@ class ReadingList extends Component {
 
   constructor(props) {
     super(props);
-    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+    console.log(props);
+    const dataSource = new ListView.DataSource({
+      rowHasChanged: (r1, r2) => !Immutable.is(r1, r2)
+    });
     this.state = {
-      dataSource: ds.cloneWithRows([
-        'John', 'Joel', 'James', 'Jimmy', 'Jackson', 'Jillian', 'Julie', 'Devin'
-      ])
+      dataSource,
     };
+  }
+
+  componentDidMount() {
+    this.props.requestReadingFeedsList(0);
   }
 
   render() {
     return (
       <View style={styles.container}>
         <ListView
-          dataSource={this.state.dataSource}
+          dataSource={this.state.dataSource.cloneWithRows(this.props.reading.get('feedsList').toArray())}
           renderRow={rowData => <StoryCard data={rowData} />}
+          enableEmptySections
         />
       </View>
     );
   }
 }
 
-export default ReadingList;
+export default connect(
+  state => ({
+    reading: state.get('reading')
+  }),
+  { requestReadingFeedsList }
+)(ReadingList);

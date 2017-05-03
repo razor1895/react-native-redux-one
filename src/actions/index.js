@@ -17,7 +17,6 @@ export const requestReadingFeedsList = (startId, params) => ({
   }
 });
 
-
 export const receiveReadingFeedsList = (startId, dataList) => ({
   type: ActionTypes.RECEIVED_READING_FEEDS_LIST,
   payload: {
