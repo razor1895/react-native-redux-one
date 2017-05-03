@@ -3,10 +3,14 @@ import {
   View,
   StyleSheet,
   Image,
-  ListView
+  ListView,
+  Platform
 } from 'react-native';
+import { connect } from 'react-redux';
+import Immutable from 'immutable';
 import MovieCard from '../../components/MovieCard';
 import { search, user } from '../../images';
+import { requestMovieFeedsList } from '../../actions';
 
 const styles = StyleSheet.create({
   container: {
@@ -29,7 +33,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class MovieList extends Component {
+class MovieList extends Component {
   static navigationOptions = {
     title: '一个影视',
     headerTintColor: '#b4b4b4',
@@ -39,22 +43,34 @@ export default class MovieList extends Component {
 
   constructor(props) {
     super(props);
-    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+    const dataSource = new ListView.DataSource({
+      rowHasChanged: (r1, r2) => !Immutable.is(r1, r2)
+    });
     this.state = {
-      dataSource: ds.cloneWithRows([
-        'John', 'Joel', 'James', 'Jimmy', 'Jackson', 'Jillian', 'Julie', 'Devin'
-      ])
+      dataSource,
     };
+  }
+
+  componentDidMount() {
+    this.props.requestMovieFeedsList(0, { platform: Platform.os });
   }
   
   render() {
     return (
       <View style={styles.container}>
         <ListView
-          dataSource={this.state.dataSource}
+          dataSource={this.state.dataSource.cloneWithRows(this.props.movie.get('feedsList').toArray())}
           renderRow={rowData => <MovieCard data={rowData} />}
+          enableEmptySections
         />
       </View>
     );
   }
 }
+
+export default connect(
+  state => ({
+    movie: state.get('movie')
+  }),
+  { requestMovieFeedsList }
+)(MovieList);

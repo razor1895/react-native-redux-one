@@ -112,20 +112,20 @@ const styles = StyleSheet.create({
   }
 });
 
-export default props => (
-  <View style={styles.cardContainer}>
-    <Text style={styles.label}>- {props.data} -</Text>
-    <Text style={styles.title}>我敢说，每个追「人民名义」的人都会迷上这部高分新剧</Text>
-    <Text style={styles.info}>文 / 鱼叔</Text>
+export default ({ data }) => (
+  <View style={styles.cardContainer} id={data.get('id')}>
+    <Text style={styles.label}>- {data.get('tag_list').size === 0 ? '影视' : data.get('tag_list').get(0).get('title')} -</Text>
+    <Text style={styles.title}>{ data.get('title') }</Text>
+    <Text style={styles.info}>文 / {data.get('author').get('user_name')}</Text>
     <Image style={styles.movieBackground} source={movieBackground} >
-      <Image style={styles.image} source={{ uri: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1493657959565&di=fc7d7c7914a51d7bd8160dd62039ef14&imgtype=0&src=http%3A%2F%2Fn1image.hjfile.cn%2Fmh%2F2017%2F04%2F14%2F83fec2188d16b72999948029c30dd2bb.png' }} />
+      <Image style={styles.image} source={{ uri: data.get('img_url') }} />
     </Image>
-    <Text style={styles.brief}>警察版《半泽直树》来了，卡司强到刺眼睛。</Text>
-    <Text style={styles.movieName}>——《小小的巨人》</Text>
+    <Text style={styles.brief}>{data.get('forward')}</Text>
+    <Text style={styles.movieName}>——《{data.get('subtitle').split(':')[1]}》</Text>
     <View style={styles.bottom}>
       <Text style={styles.time}>15小时前</Text>
       <View style={styles.buttonGroup}>
-        <Text style={styles.heartsCount}>96</Text>
+        <Text style={styles.heartsCount}>{data.get('like_count')}</Text>
         <Image style={styles.heart} source={heart} />
         <View style={styles.circle} />
         <Image style={styles.share} source={share} />
