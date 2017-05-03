@@ -29,7 +29,7 @@ export function get(urlPath, params) {
   const body = Object.assign({ version: rootConfig.apiVersion }, params);
 
   if (params) {
-    const urlEncodeKeys = Object.keys(params).map(v => `${v}=${params[v]}`).join('&');
+    const urlEncodeKeys = Object.keys(params).map(v => `${v}=${body[v]}`).join('&');
     url += `?${urlEncodeKeys}`;
   }
 
