@@ -1,4 +1,5 @@
 import React from 'react';
+import 'rxjs';
 import { Provider } from 'react-redux';
 import configureStore from './configureStore';
 import { TabBarNavigation } from './tabBar';
