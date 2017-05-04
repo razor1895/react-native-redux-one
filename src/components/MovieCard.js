@@ -122,7 +122,7 @@ export default ({ data }) => (
       <Image style={styles.image} source={{ uri: data.get('img_url') }} />
     </Image>
     <Text style={styles.brief}>{data.get('forward')}</Text>
-    <Text style={styles.movieName}>——《{data.get('subtitle').split(':')[1]}》</Text>
+    <Text style={styles.movieName}>——《{data.get('subtitle')}》</Text>
     <View style={styles.bottom}>
       <Text style={styles.time}>{formatDate(data.get('post_date'))}</Text>
       <View style={styles.buttonGroup}>

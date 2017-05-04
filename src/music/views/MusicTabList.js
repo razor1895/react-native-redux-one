@@ -62,6 +62,7 @@ class MusicList extends Component {
           dataSource={this.state.dataSource.cloneWithRows(this.props.music.get('feedsList').toArray())}
           renderRow={rowData => <MusicCard data={rowData} />}
           enableEmptySections
+          showsVerticalScrollIndicator={false}
         />
       </View>
     );

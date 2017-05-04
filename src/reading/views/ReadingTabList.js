@@ -61,6 +61,7 @@ class ReadingList extends Component {
           dataSource={this.state.dataSource.cloneWithRows(this.props.reading.get('feedsList').toArray())}
           renderRow={rowData => <StoryCard data={rowData} />}
           enableEmptySections
+          showsVerticalScrollIndicator={false}
         />
       </View>
     );

@@ -62,6 +62,7 @@ class MovieList extends Component {
           dataSource={this.state.dataSource.cloneWithRows(this.props.movie.get('feedsList').toArray())}
           renderRow={rowData => <MovieCard data={rowData} />}
           enableEmptySections
+          showsVerticalScrollIndicator={false}
         />
       </View>
     );
