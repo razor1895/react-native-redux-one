@@ -62,6 +62,7 @@ class ReadingList extends Component {
           renderRow={rowData => <StoryCard data={rowData} />}
           enableEmptySections
           showsVerticalScrollIndicator={false}
+          removeClippedSubviews={false}
         />
       </View>
     );

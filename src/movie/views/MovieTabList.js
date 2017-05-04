@@ -63,6 +63,7 @@ class MovieList extends Component {
           renderRow={rowData => <MovieCard data={rowData} />}
           enableEmptySections
           showsVerticalScrollIndicator={false}
+          removeClippedSubviews={false}
         />
       </View>
     );

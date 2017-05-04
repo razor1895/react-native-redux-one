@@ -63,6 +63,7 @@ class MusicList extends Component {
           renderRow={rowData => <MusicCard data={rowData} />}
           enableEmptySections
           showsVerticalScrollIndicator={false}
+          removeClippedSubviews={false}
         />
       </View>
     );
