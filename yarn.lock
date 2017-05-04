@@ -3463,6 +3463,14 @@ react-native-drawer-layout@1.2.0:
   dependencies:
     react-native-dismiss-keyboard "1.0.0"
 
+react-native-music-control@^0.4.1:
+  version "0.4.1"
+  resolved "http://registry.npm.taobao.org/react-native-music-control/download/react-native-music-control-0.4.1.tgz#dfe8307b660e3380ccbc04fa827e781cfcb38bf9"
+
+react-native-sound@^0.10.0:
+  version "0.10.0"
+  resolved "http://registry.npm.taobao.org/react-native-sound/download/react-native-sound-0.10.0.tgz#6bd9668059702cbf0b58a6e6b1189e5ce6972a91"
+
 react-native-tab-view@^0.0.61:
   version "0.0.61"
   resolved "http://registry.npm.taobao.org/react-native-tab-view/download/react-native-tab-view-0.0.61.tgz#9f5446c9ad33158b87f0bccf5004fbff79ca1f92"
