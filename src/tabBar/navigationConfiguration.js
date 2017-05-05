@@ -75,7 +75,7 @@ const tabBarConfiguration = {
   tabBarPosition: 'bottom',
   animationEnabled: false,
   swipeEnabled: false,
-  lazyLoad: true,
+  lazy: true,
   tabBarOptions: {
     activeTintColor: '#8a8989',
     inactiveTintColor: '#a8a6a5',
