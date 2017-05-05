@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   Dimensions,
   processColor,
-  Image
+  Image,
+  TouchableOpacity
 } from 'react-native';
+import * as Animatable from 'react-native-animatable';
+import Sound from 'react-native-sound';
 import {
   heart,
   heartFilled,
@@ -148,36 +151,124 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ({ data }) => (
-  <View style={styles.cardContainer}>
-    <Text style={styles.label}>- {data.get('tag_list').size === 0 ? '音乐' : data.get('tag_list').get(0).get('title')} -</Text>
-    <Text style={styles.title}>{data.get('title')}</Text>
-    <Text style={styles.info}>文 / {data.get('author').get('user_name')}</Text>
-    <View style={styles.musicGroup}>
-      <Image style={styles.musicBackground} source={musicBackground} >
-        <Image style={styles.copyright} source={xiamiCopyright} />
-        <Image style={styles.cover} source={{ uri: data.get('img_url') }} >
-          <Image style={styles.playerBtn} source={musicPlay} />
-        </Image>
-      </Image>
-      <Image style={styles.musicStory} source={musicStory} />
-    </View>
-    <Text
-      style={styles.musicInfo}
-      numberOfLines={1}
-      ellipsizeMode={'tail'}
-    >
-      {data.get('music_name')} {data.get('audio_author')} | {data.get('audio_album')}
-    </Text>
-    <Text style={styles.brief}>{data.get('forward')}</Text>
-    <View style={styles.bottom}>
-      <Text style={styles.time}>{ formatDate(data.get('post_date')) }</Text>
-      <View style={styles.buttonGroup}>
-        <Text style={styles.heartsCount}>{data.get('like_count')}</Text>
-        <Image style={styles.heart} source={heart} />
-        <View style={styles.circle} />
-        <Image style={styles.share} source={share} />
+export default class MusicCard extends Component {
+  constructor(props) {
+    super(props);
+    Sound.setCategory('Ambient', true);
+
+    this.state = {
+      loopingSound: undefined,
+      nowPlaying: undefined,
+      soundStatus: undefined,
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const songId = this.props.data.get('audio_url');
+    const nowPlaying = this.props.nowPlaying;
+    const nextPlay = nextProps.nowPlaying;
+    if (songId === '1771222880') {
+      console.info(`SONG_ID: ${songId}`);
+      console.info(`nowPlaying: ${nowPlaying}`);
+      console.info(`nextPlay: ${nextPlay}`);
+      console.info('stateNowPlaying', this.state.nowPlaying);
+    }
+
+    if (this.state.nowPlaying === nowPlaying && nowPlaying !== nextPlay) {
+      console.log(true);
+      this.stopMusic();
+    }
+
+    if (!this.state.nowPlaying && nowPlaying !== nextPlay && nextPlay === songId) {
+      this.playMusic(nextProps.songUrls.get(songId), songId);
+    }
+  }
+
+  playMusic(urlPath, songId) {
+    if (this.state.loopingSound) {
+      this.state.loopingSound.play();
+      this.setState({ soundStatus: 'playing' });
+      return;
+    }
+
+    const s = new Sound(urlPath, '', (e) => {
+      if (e) {
+        console.log('error', e);
+      }
+      s.setNumberOfLoops(-1);
+      s.play();
+    });
+    this.setState({ loopingSound: s, nowPlaying: songId, soundStatus: 'playing' });
+  }
+
+  pauseMusic = () => {
+    this.state.loopingSound.pause();
+    this.setState({ soundStatus: 'paused' });
+  }
+
+  stopMusic = () => {
+    if (!this.state.loopingSound) {
+      return;
+    }
+
+    this.state.loopingSound.stop().release();
+    this.setState({ loopingSound: null, nowPlaying: undefined, soundStatus: undefined });
+  };
+
+  playerBtnPressed() {
+    if (!this.state.loopingSound) {
+      this.props.requestPlayableSongUrl(this.props.data.get('audio_url'))
+    } else if (this.state.loopingSound && this.state.soundStatus === 'playing') {
+      this.pauseMusic();
+    } else {
+      this.playMusic();
+    }
+  }
+
+  render() {
+    const { data, requestPlayableSongUrl, stopSingleSong } = this.props;
+
+    return (
+      <View style={styles.cardContainer}>
+        <Text style={styles.label}>- {data.get('tag_list').size === 0 ? '音乐' : data.get('tag_list').get(0).get('title')} -</Text>
+        <Text style={styles.title}>{data.get('title')}</Text>
+        <Text style={styles.info}>文 / {data.get('author').get('user_name')}</Text>
+        <View style={styles.musicGroup}>
+          <Image style={styles.musicBackground} source={musicBackground} >
+            <Image style={styles.copyright} source={xiamiCopyright} />
+            <Animatable.Image
+              style={styles.cover}
+              source={{ uri: data.get('img_url') }}
+              animation="rotate"
+              iterationCount="infinite"
+              easing="linear"
+              duration={10000}
+            >
+              <TouchableOpacity onPress={() => this.playerBtnPressed()}>
+                <Image style={styles.playerBtn} source={musicPlay} />
+              </TouchableOpacity>
+            </Animatable.Image>
+          </Image>
+          <Image style={styles.musicStory} source={musicStory} />
+        </View>
+        <Text
+          style={styles.musicInfo}
+          numberOfLines={1}
+          ellipsizeMode={'tail'}
+        >
+          {data.get('music_name')} {data.get('audio_author')} | {data.get('audio_album')}
+        </Text>
+        <Text style={styles.brief}>{data.get('forward')}</Text>
+        <View style={styles.bottom}>
+          <Text style={styles.time}>{ formatDate(data.get('post_date')) }</Text>
+          <View style={styles.buttonGroup}>
+            <Text style={styles.heartsCount}>{data.get('like_count')}</Text>
+            <Image style={styles.heart} source={heart} />
+            <View style={styles.circle} />
+            <Image style={styles.share} source={share} />
+          </View>
+        </View>
       </View>
-    </View>
-  </View>
-);
+    );
+  }
+}

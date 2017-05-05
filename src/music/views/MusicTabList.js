@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import Immutable from 'immutable';
 import MusicCard from '../../components/MusicCard';
 import { search, user } from '../../images';
-import { requestMusicFeedsList } from '../../actions';
+import { requestMusicFeedsList, requestPlayableSongUrl, stopSingleSong } from '../../actions';
 
 const styles = StyleSheet.create({
   container: {
@@ -60,7 +60,17 @@ class MusicList extends Component {
       <View style={styles.container}>
         <ListView
           dataSource={this.state.dataSource.cloneWithRows(this.props.music.get('feedsList').toArray())}
-          renderRow={rowData => <MusicCard data={rowData} />}
+          renderRow={
+            rowData => (
+              <MusicCard
+                data={rowData}
+                requestPlayableSongUrl={this.props.requestPlayableSongUrl}
+                stopSingleSong={this.props.stopSingleSong}
+                nowPlaying={this.props.music.get('nowPlaying')}
+                songUrls={this.props.music.get('songUrls')}
+              />
+            )
+          }
           enableEmptySections
           showsVerticalScrollIndicator={false}
           removeClippedSubviews={false}
@@ -74,5 +84,5 @@ export default connect(
   state => ({
     music: state.get('music')
   }),
-  { requestMusicFeedsList }
+  { requestMusicFeedsList, requestPlayableSongUrl, stopSingleSong }
 )(MusicList);
