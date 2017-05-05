@@ -2,6 +2,7 @@ import { Observable } from 'rxjs/Observable';
 import rootConfig from '../config';
 
 const urlPrefix = rootConfig.domain + rootConfig.apiPath;
+const musicUrlPrefix = rootConfig.musicDomain;
 const isDebuggingInChrome = rootConfig.dev && !!window.navigator.userAgent;
 
 function filterJSON(res) {
@@ -60,5 +61,22 @@ export function post(urlPath, params, data) {
   }
 
   request = fetch(url, { method: 'POST', body: data }).then(filterStatus).then(filterJSON);
+  return Observable.from(request);
+}
+
+export function fetchMusic(params) {
+  const url = musicUrlPrefix + params;
+  let request;
+
+  if (isDebuggingInChrome) {
+    console.info('GET: ', url);
+    console.info('SONG_ID: ', params);
+  }
+
+  if (isDebuggingInChrome) {
+    request = fetch(url, { method: 'GET' }).then(filterStatus).then(filterJSON).then(consoleOutput);
+  }
+
+  request = fetch(url, { method: 'GET' }).then(filterStatus).then(filterJSON);
   return Observable.from(request);
 }

@@ -92,3 +92,50 @@ export const receiveMusicFeedsList = (startId, dataList) => ({
     dataList
   }
 });
+
+/**
+* @function requestMusicFeedsList
+* @param  {int} songId {songId, 虾米歌曲Id, 用于返回可播放的url地址}
+* @return {object} {type, payload}
+*/
+export const requestPlayableSongUrl = songId => ({
+  type: ActionTypes.REQUESTED_PLAYABLE_SONG_URL,
+  payload: {
+    songId
+  }
+});
+
+/**
+* @function receiveMusicFeedsList
+* @param  {int} songId  {songId, 虾米歌曲Id, 用于返回可播放的url地址}
+* @param  {str} songUrl {接口返回的歌曲播放地址}
+* @return {object} {type, payload}
+*/
+export const receivePlayableSongUrl = (songId, songUrl) => ({
+  type: ActionTypes.RECEIVED_PLAYABLE_SONG_URL,
+  payload: {
+    songId,
+    songUrl
+  }
+});
+
+/**
+* @function playInfinitelyLoopedSong
+* @param  {int} { {歌曲Id}
+* @return {object} {type, payload}
+*/
+export const playSingleSong = songId => ({
+  type: ActionTypes.PLAY_SINGLE_SONG,
+  payload: {
+    songId
+  }
+});
+
+/**
+* @function stopSingleSong
+* @description 暂停播放音乐
+* @return {object} {type, payload}
+*/
+export const stopSingleSong = () => ({
+  type: ActionTypes.STOP_SINGLE_SONG,
+});
