@@ -10,6 +10,7 @@
 		"immutable": "^3.8.1",
 		"react": "16.0.0-alpha.6",
 		"react-native": "0.44.0",
+		"react-native-animatable": "^1.1.1",
 		"react-native-music-control": "^0.4.1",
 		"react-native-sound": "^0.10.0",
 		"react-native-vector-icons": "^4.0.1",
