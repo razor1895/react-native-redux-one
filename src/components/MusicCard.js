@@ -176,7 +176,6 @@ export default class MusicCard extends Component {
     }
 
     if (this.state.nowPlaying === nowPlaying && nowPlaying !== nextPlay) {
-      console.log(true);
       this.stopMusic();
     }
 
