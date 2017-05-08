@@ -7,5 +7,5 @@ export default {
   apiVersion: 'v4.2.1',
   dev: true,
   baseId: 4060,
-  baseDate: 1494255991848
+  baseTime: 1494255991848
 };

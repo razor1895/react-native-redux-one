@@ -1,11 +1,11 @@
 import * as ActionTypes from '../ActionTypes';
-import * as movieServices from '../services/movie';
+import * as homeServices from '../services/home';
 import { receiveHomeFeedsList } from '../actions';
 
-export const fetchMovieFeedsListEpic = action$ =>
+export const fetchHomeFeedsListEpic = action$ =>
   action$.ofType(ActionTypes.REQUESTED_HOME_FEEDS_LIST)
     .switchMap(action =>
-      movieServices.getMovieFeedsList(action.payload.startId, action.payload.params)
-        .map(res => receiveHomeFeedsList(action.payload.startId, res.data))
+      homeServices.getHomeFeedsList(action.payload.location, action.payload.id, action.payload.params)
+        .map(res => receiveHomeFeedsList(res.data))
     );
 

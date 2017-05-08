@@ -22,8 +22,8 @@ export const formatDate = (source) => {
   return returnDateStr;
 };
 
-export const getCurrentId = (source) => {
-  const dateTime = new Date(source).getTime();
+export const getCurrentId = () => {
+  const dateTime = new Date().getTime();
   const baseTime = new Date(config.baseTime).getTime();
   const day = (dateTime - baseTime) / (1000 * 60 * 60 * 24);
 
