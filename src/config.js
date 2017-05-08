@@ -6,4 +6,6 @@ export default {
   imgUrl: 'http://image.wufazhuce.com/',
   apiVersion: 'v4.2.1',
   dev: true,
+  baseId: 4060,
+  baseDate: 1494255991848
 };

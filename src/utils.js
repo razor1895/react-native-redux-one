@@ -1,3 +1,5 @@
+import config from './config';
+
 export const formatDate = (source) => {
   const date = new Date(source);
   const dateTime = date.getTime();
@@ -18,4 +20,12 @@ export const formatDate = (source) => {
   }
 
   return returnDateStr;
+};
+
+export const getCurrentId = (source) => {
+  const dateTime = new Date(source).getTime();
+  const baseTime = new Date(config.baseTime).getTime();
+  const day = (dateTime - baseTime) / (1000 * 60 * 60 * 24);
+
+  return config.baseId + parseInt(day, 10);
 };
