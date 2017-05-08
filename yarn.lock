@@ -1635,8 +1635,8 @@ eslint@^3.19.0:
     user-home "^2.0.0"
 
 espree@^3.4.0:
-  version "3.4.2"
-  resolved "http://registry.npm.taobao.org/espree/download/espree-3.4.2.tgz#38dbdedbedc95b8961a1fbf04734a8f6a9c8c592"
+  version "3.4.3"
+  resolved "http://registry.npm.taobao.org/espree/download/espree-3.4.3.tgz#2910b5ccd49ce893c2ffffaab4fd8b3a31b82374"
   dependencies:
     acorn "^5.0.1"
     acorn-jsx "^3.0.0"
@@ -3447,8 +3447,8 @@ react-deep-force-update@^1.0.0:
   resolved "http://registry.npm.taobao.org/react-deep-force-update/download/react-deep-force-update-1.0.1.tgz#f911b5be1d2a6fe387507dd6e9a767aa2924b4c7"
 
 react-devtools-core@^2.0.8:
-  version "2.1.5"
-  resolved "http://registry.npm.taobao.org/react-devtools-core/download/react-devtools-core-2.1.5.tgz#cc36c514d20418d698d5e4780aa744e6d11aaa9a"
+  version "2.1.7"
+  resolved "http://registry.npm.taobao.org/react-devtools-core/download/react-devtools-core-2.1.7.tgz#7ec9521fcf846c345830125132596f22fdbaaee6"
   dependencies:
     shell-quote "^1.6.1"
     ws "^2.0.3"

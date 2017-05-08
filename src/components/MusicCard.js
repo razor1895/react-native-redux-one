@@ -9,6 +9,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
+import MusicControl from 'react-native-music-control';
 import Sound from 'react-native-sound';
 import {
   heart,
@@ -187,6 +188,11 @@ export default class MusicCard extends Component {
   playMusic(urlPath, songId) {
     if (this.state.loopingSound) {
       this.state.loopingSound.play();
+
+      MusicControl.updatePlayback({
+        state: MusicControl.STATE_PLAYING,
+        elapsedTime: this.state.loopingSound.getCurrentTime(),
+      });
       this.setState({ soundStatus: 'playing' });
       return;
     }
@@ -197,12 +203,33 @@ export default class MusicCard extends Component {
       }
       s.setNumberOfLoops(-1);
       s.play();
+
+      MusicControl.enableBackgroundMode(true);
+      MusicControl.enableControl('nextTrack', true);
+      MusicControl.enableControl('previousTrack', true);
+      MusicControl.on('play', () => { this.playMusic(); });
+      MusicControl.on('pause', () => { this.pauseMusic(); });
+      MusicControl.on('nextTrack', () => {});
+      MusicControl.on('previousTrack', () => {});
+
+      MusicControl.setNowPlaying({
+        title: this.props.data.get('music_name'),
+        artwork: this.props.data.get('img_url'),
+        artist: this.props.data.get('audio_author'),
+        album: this.props.data.get('audio_album'),
+        duration: s.getDuration(),
+      });
     });
+
+    MusicControl.enableControl('play', false);
+    MusicControl.enableControl('pause', true);
     this.setState({ loopingSound: s, nowPlaying: songId, soundStatus: 'playing' });
   }
 
   pauseMusic = () => {
     this.state.loopingSound.pause();
+    MusicControl.enableControl('play', false);
+    MusicControl.enableControl('pause', true);
     this.setState({ soundStatus: 'paused' });
   }
 
@@ -212,12 +239,13 @@ export default class MusicCard extends Component {
     }
 
     this.state.loopingSound.stop().release();
+    MusicControl.resetNowPlaying();
     this.setState({ loopingSound: null, nowPlaying: undefined, soundStatus: undefined });
   };
 
   playerBtnPressed() {
     if (!this.state.loopingSound) {
-      this.props.requestPlayableSongUrl(this.props.data.get('audio_url'))
+      this.props.requestPlayableSongUrl(this.props.data.get('audio_url'));
     } else if (this.state.loopingSound && this.state.soundStatus === 'playing') {
       this.pauseMusic();
     } else {
