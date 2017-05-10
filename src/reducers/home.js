@@ -3,9 +3,14 @@ import { createReducer } from 'redux-immutablejs';
 import * as ActionTypes from '../ActionTypes';
 
 const initialState = Immutable.fromJS({
-  feedsList: [],
+  feeds: {
+    id: '',
+    date: '',
+    weather: {},
+    content_list: [],
+  },
 });
 
 export default createReducer(initialState, {
-  [ActionTypes.RECEIVED_HOME_FEEDS_LIST]: (state, action) => state.set('feedsList', Immutable.fromJS(action.payload.dataList)),
+  [ActionTypes.RECEIVED_HOME_FEEDS_LIST]: (state, action) => state.set('feeds', Immutable.fromJS(action.payload.dataList)),
 });
