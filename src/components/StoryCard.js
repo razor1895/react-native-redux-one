@@ -99,9 +99,9 @@ const styles = StyleSheet.create({
 
 export default ({ data }) => (
   <View style={styles.cardContainer} id={data.get('id')}>
-    <Text style={styles.label}>- {data.get('tag_list').size === 0 ? '阅读' : data.get('tag_list').get(0).get('title')} -</Text>
+    <Text style={styles.label}>- {data.get('tag_list').size === 0 ? data.get('category') === '3' ? '问答' : '阅读' : data.get('tag_list').get(0).get('title')} -</Text>
     <Text style={styles.title}>{data.get('title')}</Text>
-    <Text style={styles.info}>文 / {data.get('author').get('user_name')}</Text>
+    <Text style={styles.info}>{data.get('category') === '3' ? `${data.get('answerer').get('user_name')}答` : `文 / ${data.get('author').get('user_name')}`}</Text>
     <Image style={styles.image} source={{ uri: data.get('img_url') }} />
     <Text style={styles.brief}>{data.get('forward')}</Text>
     <View style={styles.bottom}>
