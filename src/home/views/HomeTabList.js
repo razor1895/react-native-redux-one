@@ -8,7 +8,10 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import Immutable from 'immutable';
+import PictureCard from '../../components/PictureCard';
 import StoryCard from '../../components/StoryCard';
+import MusicCard from '../../components/MusicCard';
+import MovieCard from '../../components/MovieCard';
 import { search, user } from '../../images';
 import { requestHomeFeedsList } from '../../actions';
 import { getCurrentId } from '../../utils';
@@ -56,15 +59,32 @@ class HomeList extends Component {
   componentDidMount() {
     const id = getCurrentId();
     getCityName.then(res => res.json())
-      .then(({ city }) => this.props.requestHomeFeedsList(city, id, { platform: Platform.OS }));
+      .then(({ city }) => this.props.requestHomeFeedsList(city, 4051, { platform: Platform.OS }));
+  }
+
+  renderCard = (data) => {
+    const category = parseInt(data.get('category'), 10);
+    let cardComponent = null;
+
+    if (category === 0) {
+      cardComponent = <PictureCard data={data} />;
+    } else if (category === 4) {
+      cardComponent = <MusicCard data={data} />;
+    } else if ([1, 2, 3].indexOf(category) > -1) {
+      cardComponent = <StoryCard data={data} />;
+    } else if (category === 5) {
+      cardComponent = <MovieCard data={data} />;
+    }
+
+    return cardComponent;
   }
 
   render() {
     return (
       <View style={styles.container}>
         <ListView
-          dataSource={this.state.dataSource.cloneWithRows(this.props.home.get('feedsList').toArray())}
-          renderRow={rowData => <StoryCard data={rowData} />}
+          dataSource={this.state.dataSource.cloneWithRows(this.props.feeds.get('content_list').toArray())}
+          renderRow={rowData => this.renderCard(rowData)}
           enableEmptySections
           showsVerticalScrollIndicator={false}
           removeClippedSubviews={false}
@@ -76,7 +96,7 @@ class HomeList extends Component {
 
 export default connect(
   state => ({
-    home: state.get('home')
+    feeds: state.get('home').get('feeds')
   }),
   { requestHomeFeedsList }
 )(HomeList);
