@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -96,25 +96,45 @@ const styles = StyleSheet.create({
   }
 });
 
-const getPictureSize = uri =>
-  Image.getSize(uri, (imageWidth, imageHeight) => ({ height: imageHeight * (width / imageWidth) }));
+export default class PictureCard extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      imageHeight: 200,
+    };
+  }
 
-export default ({ data }) => (
-  <View style={styles.cardContainer} id={data.get('id')}>
-    <Image source={{ uri: data.get('img_url') }} style={[styles.picture, getPictureSize(data.get('img_url'))]} >
-      <Text style={styles.volume}>{data.get('volume')}</Text>
-    </Image>
-    <Text style={styles.title}>{data.get('title')} | {data.get('pic_info')}</Text>
-    <Text style={styles.info}>{data.get('forward')}</Text>
-    <Text style={styles.quoteAuthor}>{data.get('words_info')}</Text>
-    <View style={styles.bottom}>
-      <Text style={styles.category}>小记</Text>
-      <View style={styles.buttonGroup}>
-        <Text style={styles.heartsCount}>{data.get('like_count')}</Text>
-        <Image style={styles.heart} source={heart} />
-        <View style={styles.circle} />
-        <Image style={styles.share} source={share} />
+  componentDidMount() {
+    if (this.props.data.get('img_url')) {
+      this.getPictureSize(this.props.data.get('img_url'));
+    }
+  }
+
+  getPictureSize = uri => {
+    Image.getSize(uri, (imageWidth, imageHeight) => this.setState({ imageHeight: imageHeight * (width / imageWidth) }));
+  }
+
+  render() {
+    const { data } = this.props;
+
+    return (
+      <View style={styles.cardContainer} id={data.get('id')}>
+        <Image source={{ uri: data.get('img_url') }} style={[styles.picture, { height: this.state.imageHeight }]} >
+          <Text style={styles.volume}>{data.get('volume')}</Text>
+        </Image>
+        <Text style={styles.title}>{data.get('title')} | {data.get('pic_info')}</Text>
+        <Text style={styles.info}>{data.get('forward')}</Text>
+        <Text style={styles.quoteAuthor}>{data.get('words_info')}</Text>
+        <View style={styles.bottom}>
+          <Text style={styles.category}>小记</Text>
+          <View style={styles.buttonGroup}>
+            <Text style={styles.heartsCount}>{data.get('like_count')}</Text>
+            <Image style={styles.heart} source={heart} />
+            <View style={styles.circle} />
+            <Image style={styles.share} source={share} />
+          </View>
+        </View>
       </View>
-    </View>
-  </View>
-);
+    );
+  }
+}
