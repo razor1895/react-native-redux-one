@@ -9,8 +9,10 @@ const initialState = Immutable.fromJS({
     weather: {},
     content_list: [],
   },
+  ids: [],
 });
 
 export default createReducer(initialState, {
   [ActionTypes.RECEIVED_HOME_FEEDS_LIST]: (state, action) => state.set('feeds', Immutable.fromJS(action.payload.dataList)),
+  [ActionTypes.RECEIVED_HOME_ID_LIST]: (state, action) => state.set('ids', Immutable.fromJS(action.payload.dataList))
 });

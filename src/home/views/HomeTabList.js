@@ -13,7 +13,7 @@ import StoryCard from '../../components/StoryCard';
 import MusicCard from '../../components/MusicCard';
 import MovieCard from '../../components/MovieCard';
 import { search, user } from '../../images';
-import { requestHomeFeedsList } from '../../actions';
+import { requestHomeFeedsList, requestHomeIdList } from '../../actions';
 import { getCurrentId } from '../../utils';
 import { getCityName } from '../../services/home';
 
@@ -57,9 +57,17 @@ class HomeList extends Component {
   }
 
   componentDidMount() {
-    const id = getCurrentId();
-    getCityName.then(res => res.json())
-      .then(({ city }) => this.props.requestHomeFeedsList(city, 4051, { platform: Platform.OS }));
+    this.props.requestHomeIdList({ platform: Platform.OS });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!Immutable.is(this.props.ids, nextProps.ids)) {
+      if (nextProps.ids.size > 0) {
+        const id = nextProps.ids.get(0);
+        getCityName.then(res => res.json())
+          .then(({ city }) => this.props.requestHomeFeedsList(city, id, { platform: Platform.OS }));
+      }
+    }
   }
 
   renderCard = (data) => {
@@ -96,7 +104,8 @@ class HomeList extends Component {
 
 export default connect(
   state => ({
-    feeds: state.get('home').get('feeds')
+    feeds: state.get('home').get('feeds'),
+    ids: state.get('home').get('ids')
   }),
-  { requestHomeFeedsList }
+  { requestHomeFeedsList, requestHomeIdList }
 )(HomeList);

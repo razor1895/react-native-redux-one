@@ -3,7 +3,7 @@ import searchUsers from './user';
 import { fetchReadingFeedsListEpic } from './reading';
 import { fetchMovieFeedsListEpic } from './movie';
 import { fetchMusicFeedsListEpic, fetchPlayableSongUrl } from './music';
-import { fetchHomeFeedsListEpic } from './home';
+import { fetchHomeFeedsListEpic, fetchHomeIdListEpic } from './home';
 
 export default combineEpics(
   // searchUsers,
@@ -11,5 +11,6 @@ export default combineEpics(
   fetchMovieFeedsListEpic,
   fetchMusicFeedsListEpic,
   fetchPlayableSongUrl,
-  fetchHomeFeedsListEpic
+  fetchHomeFeedsListEpic,
+  fetchHomeIdListEpic
 );

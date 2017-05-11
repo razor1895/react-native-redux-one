@@ -167,3 +167,27 @@ export const receiveHomeFeedsList = dataList => ({
     dataList
   }
 });
+
+/**
+* @function requestHomeIdList
+* @param  {object} params  {uuid, user_id, platform, version}
+* @return {object} {type, payload}
+*/
+export const requestHomeIdList = params => ({
+  type: ActionTypes.REQUESTED_HOME_ID_LIST,
+  payload: {
+    params
+  }
+});
+
+/**
+* @function receiveHomeIdList
+* @param  {array} dataList {接口返回的首页需要的ID列表}
+* @return {object} {type, payload}
+*/
+export const receiveHomeIdList = dataList => ({
+  type: ActionTypes.RECEIVED_HOME_ID_LIST,
+  payload: {
+    dataList
+  }
+});
