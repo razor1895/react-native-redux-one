@@ -9,3 +9,10 @@ export const fetchReadingFeedsListEpic = action$ =>
         .map(res => receiveReadingFeedsList(action.payload.startId, res.data))
     );
 
+export const fetchStoryEpic = action$ =>
+  action$.ofType(ActionTypes.REQUESTED_STORY)
+    .switchMap(action =>
+      readingServices.getStory(action.payload.storyId, action.payload.params)
+        .map(res => receiveReadingFeedsList(action.payload.storyId, res.data))
+    );
+
