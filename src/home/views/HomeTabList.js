@@ -79,7 +79,7 @@ class HomeList extends Component {
     } else if (category === 4) {
       cardComponent = <MusicCard data={data} />;
     } else if ([1, 2, 3].indexOf(category) > -1) {
-      cardComponent = <StoryCard data={data} />;
+      cardComponent = <StoryCard data={data} source="summary" />;
     } else if (category === 5) {
       cardComponent = <MovieCard data={data} />;
     }
