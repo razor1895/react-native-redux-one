@@ -199,7 +199,7 @@ export const receiveHomeIdList = dataList => ({
 * @return {object} {type, payload}
 */
 export const requestStory = (storyId, params) => ({
-  type: ActionTypes.REQUESTED_HOME_ID_LIST,
+  type: ActionTypes.REQUESTED_STORY,
   payload: {
     params
   }
