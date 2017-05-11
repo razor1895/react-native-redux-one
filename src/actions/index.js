@@ -191,3 +191,28 @@ export const receiveHomeIdList = dataList => ({
     dataList
   }
 });
+
+/**
+* @function requestStory
+* @param  {int}    storyId  {文章Id}
+* @param  {object} params  {uuid, user_id, platform, version, source, source_id}
+* @return {object} {type, payload}
+*/
+export const requestStory = (storyId, params) => ({
+  type: ActionTypes.REQUESTED_HOME_ID_LIST,
+  payload: {
+    params
+  }
+});
+
+/**
+* @function receiveStory
+* @param  {object} data {接口返回的首页需要的ID列表}
+* @return {object} {type, payload}
+*/
+export const receiveStory = data => ({
+  type: ActionTypes.RECEIVED_STORY,
+  payload: {
+    data
+  }
+});
