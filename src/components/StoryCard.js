@@ -5,7 +5,8 @@ import {
   StyleSheet,
   Dimensions,
   processColor,
-  Image
+  Image,
+  TouchableWithoutFeedback
 } from 'react-native';
 import { heart, heartFilled, share } from '../images';
 import { formatDate } from '../utils';
@@ -97,21 +98,23 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ({ data }) => (
-  <View style={styles.cardContainer} id={data.get('id')}>
-    <Text style={styles.label}>- {data.get('tag_list').size === 0 ? data.get('category') === '3' ? '问答' : '阅读' : data.get('tag_list').get(0).get('title')} -</Text>
-    <Text style={styles.title}>{data.get('title')}</Text>
-    <Text style={styles.info}>{data.get('category') === '3' ? `${data.get('answerer').get('user_name')}答` : `文 / ${data.get('author').get('user_name')}`}</Text>
-    <Image style={styles.image} source={{ uri: data.get('img_url') }} />
-    <Text style={styles.brief}>{data.get('forward')}</Text>
-    <View style={styles.bottom}>
-      <Text style={styles.time}>{formatDate(data.get('post_date'))}</Text>
-      <View style={styles.buttonGroup}>
-        <Text style={styles.heartsCount}>{data.get('like_count')}</Text>
-        <Image style={styles.heart} source={heart} />
-        <View style={styles.circle} />
-        <Image style={styles.share} source={share} />
+export default ({ data, navigation, source }) => (
+  <TouchableWithoutFeedback onPress={() => navigation.navigate('ReadingTabDetail', { source, storyId: data.get('item_id'), source_id: data.get('id') })}>
+    <View style={styles.cardContainer} id={data.get('id')}>
+      <Text style={styles.label}>- {data.get('tag_list').size === 0 ? data.get('category') === '3' ? '问答' : '阅读' : data.get('tag_list').get(0).get('title')} -</Text>
+      <Text style={styles.title}>{data.get('title')}</Text>
+      <Text style={styles.info}>{data.get('category') === '3' ? `${data.get('answerer').get('user_name')}答` : `文 / ${data.get('author').get('user_name')}`}</Text>
+      <Image style={styles.image} source={{ uri: data.get('img_url') }} />
+      <Text style={styles.brief}>{data.get('forward')}</Text>
+      <View style={styles.bottom}>
+        <Text style={styles.time}>{formatDate(data.get('post_date'))}</Text>
+        <View style={styles.buttonGroup}>
+          <Text style={styles.heartsCount}>{data.get('like_count')}</Text>
+          <Image style={styles.heart} source={heart} />
+          <View style={styles.circle} />
+          <Image style={styles.share} source={share} />
+        </View>
       </View>
     </View>
-  </View>
+  </TouchableWithoutFeedback>
 );

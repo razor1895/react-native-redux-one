@@ -59,7 +59,7 @@ class ReadingList extends Component {
       <View style={styles.container}>
         <ListView
           dataSource={this.state.dataSource.cloneWithRows(this.props.reading.get('feedsList').toArray())}
-          renderRow={rowData => <StoryCard data={rowData} source="channel_reading" />}
+          renderRow={rowData => <StoryCard data={rowData} source="channel_reading" navigation={this.props.navigation} />}
           enableEmptySections
           showsVerticalScrollIndicator={false}
           removeClippedSubviews={false}

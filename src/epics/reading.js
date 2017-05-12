@@ -13,6 +13,6 @@ export const fetchStoryEpic = action$ =>
   action$.ofType(ActionTypes.REQUESTED_STORY)
     .switchMap(action =>
       readingServices.getStory(action.payload.storyId, action.payload.params)
-        .map(res => receiveStory(action.payload.storyId, res.data))
+        .map(res => receiveStory(res.data))
     );
 

@@ -201,6 +201,7 @@ export const receiveHomeIdList = dataList => ({
 export const requestStory = (storyId, params) => ({
   type: ActionTypes.REQUESTED_STORY,
   payload: {
+    storyId,
     params
   }
 });
