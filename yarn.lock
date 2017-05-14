@@ -1779,7 +1779,7 @@ fbjs-scripts@^0.7.0:
     semver "^5.1.0"
     through2 "^2.0.0"
 
-fbjs@^0.8.5, fbjs@^0.8.9, fbjs@~0.8.9:
+fbjs@^0.8.3, fbjs@^0.8.5, fbjs@^0.8.9, fbjs@~0.8.9:
   version "0.8.12"
   resolved "http://registry.npm.taobao.org/fbjs/download/fbjs-0.8.12.tgz#10b5d92f76d45575fd63a217d4ea02bea2f8ed04"
   dependencies:
@@ -3494,6 +3494,12 @@ react-native-vector-icons@^4.0.1:
     lodash "^4.0.0"
     prop-types "^15.5.8"
     yargs "^6.3.0"
+
+react-native-wkwebview-reborn@^1.4.0:
+  version "1.4.0"
+  resolved "http://registry.npm.taobao.org/react-native-wkwebview-reborn/download/react-native-wkwebview-reborn-1.4.0.tgz#5558ac1f7bc8e7ac30bc6f8b30e5ab4ab64523f8"
+  dependencies:
+    fbjs "^0.8.3"
 
 react-native@0.44.0:
   version "0.44.0"
