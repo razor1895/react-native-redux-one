@@ -5,6 +5,8 @@ import epics from './epics';
 
 const isDebuggingInChrome = __DEV__ && !!window.navigator.userAgent;
 const epicMiddleware = createEpicMiddleware(epics);
+const nextRootReducer = require('./reducers/index').default;
+const nextRootEpic = require('./epics').default;
 
 export default (preloadedState) => {
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -20,8 +22,6 @@ export default (preloadedState) => {
 
   if (module.hot) {
     module.hot.accept(() => {
-      const nextRootReducer = require('./reducers/index').default;
-      const nextRootEpic = require('./epics').default;
       store.replaceReducer(nextRootReducer);
       epicMiddleware.replaceEpic(nextRootEpic);
     });
