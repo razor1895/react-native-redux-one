@@ -2,76 +2,59 @@ import React from 'react';
 import { TabNavigator } from 'react-navigation';
 import { StyleSheet, PixelRatio, Image } from 'react-native';
 // Tab-View
-import TabView from 'react-navigation/src/views/TabView/TabView';
+import TabBarBottom from 'react-navigation/src/views/TabView/TabBarBottom';
 // Tab-Navigators
-import { HomeTabNavigation } from '../home';
-import { ReadingTabNavigation } from '../reading';
-import { MusicTabNavigation } from '../music';
-import { MovieTabNavigation } from '../movie';
+import HomeScreen from '../HomeScreen';
+import AllScreen from '../AllScreen';
+import MeScreen from '../MeScreen';
 import * as Icon from '../images';
 
-const ratio = PixelRatio.get() > 2 ? PixelRatio.get() : 3;
 const styles = StyleSheet.create({
   tabIcon: {
-    width: 80 / ratio,
-    height: 80 / ratio,
-    resizeMode: 'contain',
+    width: 40,
+    height: 40,
+    resizeMode: 'cover',
   }
 });
 
 const routeConfiguration = {
   home: {
-    screen: HomeTabNavigation,
+    screen: HomeScreen,
     navigationOptions: {
-      tabBarLabel: '首页',
       tabBarIcon: ({ focused }) => (
         <Image
-          source={focused ? Icon.homeActive : Icon.home}
+          source={focused ? Icon.ONE_FILL : Icon.ONE}
           style={styles.tabIcon}
         />
       ),
     }
   },
-  reading: {
-    screen: ReadingTabNavigation,
+  all: {
+    screen: AllScreen,
     navigationOptions: {
-      tabBarLabel: '阅读',
       tabBarIcon: ({ focused }) => (
         <Image
-          source={focused ? Icon.readingActive : Icon.reading}
+          source={focused ? Icon.ALL_FILL : Icon.ALL}
           style={styles.tabIcon}
         />
       ),
     }
   },
-  music: {
-    screen: MusicTabNavigation,
+  me: {
+    screen: MeScreen,
     navigationOptions: {
-      tabBarLabel: '音乐',
       tabBarIcon: ({ focused }) => (
         <Image
-          source={focused ? Icon.musicActive : Icon.music}
+          source={focused ? Icon.ME_FILL : Icon.ME}
           style={styles.tabIcon}
         />
       ),
     }
   },
-  movie: {
-    screen: MovieTabNavigation,
-    navigationOptions: {
-      tabBarLabel: '影视',
-      tabBarIcon: ({ focused }) => (
-        <Image
-          source={focused ? Icon.movieActive : Icon.movie}
-          style={styles.tabIcon}
-        />
-      ),
-    }
-  }
 };
 
 const tabBarConfiguration = {
-  // tabBarComponent: TabView.TabBarBottom,
+  tabBarComponent: TabBarBottom,
   tabBarPosition: 'bottom',
   animationEnabled: false,
   swipeEnabled: false,
@@ -79,9 +62,12 @@ const tabBarConfiguration = {
   tabBarOptions: {
     activeTintColor: '#8a8989',
     inactiveTintColor: '#a8a6a5',
+    showLabel: false,
+    style: {
+      backgroundColor: 'rgb(246, 246, 246)',
+    }
   }
 };
 
 export default TabNavigator(routeConfiguration, tabBarConfiguration);
-
 
