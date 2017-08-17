@@ -1,6 +1,6 @@
 import React from 'react';
 import { TabNavigator } from 'react-navigation';
-import { StyleSheet, PixelRatio, Image } from 'react-native';
+import { StyleSheet, Image } from 'react-native';
 // Tab-View
 import TabBarBottom from 'react-navigation/src/views/TabView/TabBarBottom';
 // Tab-Navigators
