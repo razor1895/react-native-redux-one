@@ -2,20 +2,22 @@ import React, { Component } from 'react';
 import {
   View,
   StyleSheet,
-  Image,
-  ListView,
+  FlatList,
   Platform,
   Text,
 } from 'react-native';
 import { connect } from 'react-redux';
 import Immutable from 'immutable';
+import PropTypes from 'prop-types';
+import ImmutablePropTypes from 'react-immutable-proptypes';
+
 import PictureCard from '../../components/PictureCard';
 import StoryCard from '../../components/StoryCard';
 import MusicCard from '../../components/MusicCard';
 import MovieCard from '../../components/MovieCard';
+import SlideList from '../../components/SlideList';
 import { search, user } from '../../images';
-import { requestHomeFeedsList, requestHomeIdList } from '../../actions';
-import { getCurrentId } from '../../utils';
+import { requestHomeFeeds, requestHomeIdList } from '../../actions';
 import { getCityName } from '../../services/home';
 
 const styles = StyleSheet.create({
@@ -40,21 +42,26 @@ const styles = StyleSheet.create({
 });
 
 class HomeList extends Component {
-  constructor(props) {
-    super(props);
-    const dataSource = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => !Immutable.is(r1, r2)
-    });
-    this.state = {
-      dataSource,
-    };
+  static propTypes = {
+    requestHomeFeeds: PropTypes.func.isRequired,
+    feeds: ImmutablePropTypes.mapContains({
+      id: PropTypes.string,
+      weather: ImmutablePropTypes.map,
+      content_list: ImmutablePropTypes.list,
+      date: PropTypes.string,
+      menu: ImmutablePropTypes.mapContains({
+        vol: PropTypes.string,
+        list: ImmutablePropTypes.list
+      })
+    }).isRequired,
   }
 
   componentDidMount() {
-    this.props.requestHomeIdList({ platform: Platform.OS });
+    getCityName.then(res => res.json())
+      .then(({ city }) => this.props.requestHomeFeeds(city, 0, { platform: Platform.OS }));
   }
 
-  componentWillReceiveProps(nextProps) {
+  /* componentWillReceiveProps(nextProps) {
     if (!Immutable.is(this.props.ids, nextProps.ids)) {
       if (nextProps.ids.size > 0) {
         const id = nextProps.ids.get(0);
@@ -62,29 +69,51 @@ class HomeList extends Component {
           .then(({ city }) => this.props.requestHomeFeedsList(city, id, { platform: Platform.OS }));
       }
     }
-  }
+  } */
 
-  renderCard = (data) => {
-    const category = parseInt(data.get('category'), 10);
+  keyExtractor = (item, index) => (index === 1 ? 'special' : item.get('id'));
+
+  renderCard = ({ item, index }) => {
     let cardComponent = null;
+    let category = -1;
+
+    if (index !== 1) {
+      category = parseInt(item.get('category'), 10);
+    }
 
     if (category === 0) {
-      cardComponent = <PictureCard data={data} />;
+      cardComponent = <PictureCard data={item} />;
     } else if (category === 4) {
-      cardComponent = <MusicCard data={data} />;
+      cardComponent = <MusicCard data={item} />;
     } else if ([1, 2, 3].indexOf(category) > -1) {
-      cardComponent = <StoryCard data={data} source="summary" />;
+      cardComponent = <StoryCard data={item} source="summary" />;
     } else if (category === 5) {
-      cardComponent = <MovieCard data={data} />;
+      cardComponent = <MovieCard data={item} />;
+    } else if (category === -1) {
+      cardComponent = <SlideList data={item} />;
     }
+
+    console.log(cardComponent);
 
     return cardComponent;
   }
 
   render() {
+    const feed = this.props.feeds.get(0);
+    let data = [];
+
+    if (feed) {
+      data = feed.get('content_list').toArray();
+      data.splice(1, 0, feed.get('menu'));
+    }
+
     return (
       <View style={styles.container}>
-        <Text>124</Text>
+        <FlatList
+          data={data}
+          keyExtractor={this.keyExtractor}
+          renderItem={this.renderCard}
+        />
       </View>
     );
   }
@@ -95,5 +124,5 @@ export default connect(
     feeds: state.get('home').get('feeds'),
     ids: state.get('home').get('ids')
   }),
-  { requestHomeFeedsList, requestHomeIdList }
+  { requestHomeFeeds, requestHomeIdList }
 )(HomeList);
