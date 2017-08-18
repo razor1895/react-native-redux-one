@@ -5,10 +5,10 @@ import {
   StyleSheet,
   Dimensions,
   processColor,
-  Image
+  Image,
+  ImageBackground
 } from 'react-native';
-import { heart, heartFilled, share } from '../images';
-import { formatDate } from '../utils';
+import { heart, heartFill, share } from '../images';
 
 const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
@@ -17,12 +17,12 @@ const styles = StyleSheet.create({
     marginTop: 22,
     paddingBottom: 15,
     backgroundColor: processColor('#fff'),
-    marginBottom: 10,
+    marginBottom: 5,
   },
   picture: {
     width,
     height: 200,
-    resizeMode: 'stretch',
+    // resizeMode: 'stretch',
     marginBottom: 12,
   },
   volume: {
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   category: {
-    marginLeft: 10,
+    marginLeft: 20,
     color: '#888',
     fontSize: 12,
     alignSelf: 'center',
@@ -110,7 +110,7 @@ export default class PictureCard extends Component {
     }
   }
 
-  getPictureSize = uri => {
+  getPictureSize = (uri) => {
     Image.getSize(uri, (imageWidth, imageHeight) => this.setState({ imageHeight: imageHeight * (width / imageWidth) }));
   }
 
@@ -119,9 +119,9 @@ export default class PictureCard extends Component {
 
     return (
       <View style={styles.cardContainer} id={data.get('id')}>
-        <Image source={{ uri: data.get('img_url') }} style={[styles.picture, { height: this.state.imageHeight }]} >
+        <ImageBackground source={{ uri: data.get('img_url') }} style={[styles.picture, { height: this.state.imageHeight }]} >
           <Text style={styles.volume}>{data.get('volume')}</Text>
-        </Image>
+        </ImageBackground>
         <Text style={styles.title}>{data.get('title')} | {data.get('pic_info')}</Text>
         <Text style={styles.info}>{data.get('forward')}</Text>
         <Text style={styles.quoteAuthor}>{data.get('words_info')}</Text>

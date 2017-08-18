@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     width,
     paddingBottom: 15,
     backgroundColor: processColor('#fff'),
-    marginBottom: 10,
+    marginBottom: 5,
   },
   label: {
     color: '#8a8a8a',

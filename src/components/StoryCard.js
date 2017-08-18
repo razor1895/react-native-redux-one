@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
@@ -15,10 +15,11 @@ const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   cardContainer: {
     width,
-    padding: 10,
+    paddingTop: 12,
     paddingBottom: 15,
+    paddingHorizontal: 20,
     backgroundColor: processColor('#fff'),
-    marginBottom: 10,
+    marginBottom: 5,
   },
   label: {
     color: '#8a8a8a',
@@ -28,7 +29,6 @@ const styles = StyleSheet.create({
     fontWeight: '200',
   },
   title: {
-    paddingLeft: 20,
     marginBottom: 15,
     color: '#393939',
     fontWeight: '400',
@@ -38,26 +38,22 @@ const styles = StyleSheet.create({
     lineHeight: 20
   },
   info: {
-    paddingLeft: 20,
-    marginBottom: 20,
-    fontSize: 13,
+    marginBottom: 10,
+    fontSize: 14,
     color: '#9a9a9a',
     letterSpacing: 0.5,
     fontWeight: '300'
   },
   image: {
-    width: width - 20,
-    height: 170,
+    width: width - 40,
     resizeMode: 'cover',
-    marginBottom: 15,
+    // marginBottom: 15,
   },
   brief: {
-    paddingLeft: 20,
-    width: 280,
-    fontSize: 12,
-    fontWeight: '300',
-    lineHeight: 17,
-    color: '#adadad',
+    width: 320,
+    fontSize: 14,
+    lineHeight: 30,
+    color: '#999',
     marginBottom: 20
   },
   bottom: {
@@ -98,23 +94,56 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ({ data, navigation, source }) => (
-  <TouchableWithoutFeedback onPress={() => navigation.navigate('ReadingTabDetail', { source, storyId: data.get('item_id'), source_id: data.get('id') })}>
-    <View style={styles.cardContainer} id={data.get('id')}>
-      <Text style={styles.label}>- {data.get('tag_list').size === 0 ? data.get('category') === '3' ? '问答' : '阅读' : data.get('tag_list').get(0).get('title')} -</Text>
-      <Text style={styles.title}>{data.get('title')}</Text>
-      <Text style={styles.info}>{data.get('category') === '3' ? `${data.get('answerer').get('user_name')}答` : `文 / ${data.get('author').get('user_name')}`}</Text>
-      <Image style={styles.image} source={{ uri: data.get('img_url') }} />
-      <Text style={styles.brief}>{data.get('forward')}</Text>
-      <View style={styles.bottom}>
-        <Text style={styles.time}>{formatDate(data.get('post_date'))}</Text>
-        <View style={styles.buttonGroup}>
-          <Text style={styles.heartsCount}>{data.get('like_count')}</Text>
-          <Image style={styles.heart} source={heart} />
-          <View style={styles.circle} />
-          <Image style={styles.share} source={share} />
+export default class StoryCard extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      backgroundImageHeight: 170,
+    };
+  }
+
+  componentDidMount() {
+    Image.getSize(this.props.data.get('img_url'), (w, h) => {
+      const ratio = (width - 40) / w;
+      const backgroundImageHeight = h * ratio;
+      this.setState({ backgroundImageHeight });
+    });
+  }
+
+  render() {
+    const { data, source, navigation } = this.props;
+    let category;
+
+    if (data.get('tag_list').size === 0) {
+      if (data.get('category') === '3') {
+        category = '问答';
+      } else {
+        category = '阅读';
+      }
+    } else {
+      data.get('tag_list').get(0).get('title');
+    }
+
+    return (
+      <TouchableWithoutFeedback onPress={() => navigation.navigate('ReadingTabDetail', { source, storyId: data.get('item_id'), source_id: data.get('id') })}>
+        <View style={styles.cardContainer} id={data.get('id')}>
+          <Text style={styles.label}>- {category} -</Text>
+          <Text style={styles.title}>{data.get('title')}</Text>
+          <Text style={styles.info}>{data.get('category') === '3' ? `${data.get('answerer').get('user_name')}答` : `文 / ${data.get('author').get('user_name')}`}</Text>
+          <Image style={[styles.image, { height: this.state.backgroundImageHeight }]} source={{ uri: data.get('img_url') }} />
+          <Text style={styles.brief}>{data.get('forward')}</Text>
+          <View style={styles.bottom}>
+            <Text style={styles.time}>{formatDate(data.get('post_date'))}</Text>
+            <View style={styles.buttonGroup}>
+              <Text style={styles.heartsCount}>{data.get('like_count')}</Text>
+              <Image style={styles.heart} source={heart} />
+              <View style={styles.circle} />
+              <Image style={styles.share} source={share} />
+            </View>
+          </View>
         </View>
-      </View>
-    </View>
-  </TouchableWithoutFeedback>
-);
+      </TouchableWithoutFeedback>
+    );
+  }
+};
+
