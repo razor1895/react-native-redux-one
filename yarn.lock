@@ -3753,6 +3753,10 @@ react-devtools-core@2.3.1:
     shell-quote "^1.6.1"
     ws "^2.0.3"
 
+react-immutable-proptypes@^2.1.0:
+  version "2.1.0"
+  resolved "http://registry.npm.taobao.org/react-immutable-proptypes/download/react-immutable-proptypes-2.1.0.tgz#023d6f39bb15c97c071e9e60d00d136eac5fa0b4"
+
 react-native-animatable@^1.2.3:
   version "1.2.3"
   resolved "http://registry.npm.taobao.org/react-native-animatable/download/react-native-animatable-1.2.3.tgz#d0f0bd694833b934f3aaa1275739228b786ecb4b"

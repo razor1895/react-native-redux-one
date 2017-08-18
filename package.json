@@ -10,6 +10,7 @@
 		"immutable": "^3.8.1",
 		"prop-types": "^15.5.10",
 		"react": "16.0.0-alpha.12",
+		"react-immutable-proptypes": "^2.1.0",
 		"react-native": "0.47.1",
 		"react-native-animatable": "^1.2.3",
 		"react-native-htmlview": "^0.12.0",
