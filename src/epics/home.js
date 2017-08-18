@@ -3,10 +3,10 @@ import * as homeServices from '../services/home';
 import { receiveHomeFeedsList, receiveHomeIdList } from '../actions';
 
 export const fetchHomeFeedsListEpic = action$ =>
-  action$.ofType(ActionTypes.REQUESTED_HOME_FEEDS_LIST)
+  action$.ofType(ActionTypes.REQUESTED_HOME_FEEDS)
     .switchMap(action =>
-      homeServices.getHomeFeedsList(action.payload.location, action.payload.id, action.payload.params)
-        .map(res => receiveHomeFeedsList(res.data))
+      homeServices.getHomeFeeds(action.payload.location, action.payload.id, action.payload.params)
+        .map(res => receiveHomeFeedsList(action.payload.id, res.data))
     );
 
 export const fetchHomeIdListEpic = action$ =>

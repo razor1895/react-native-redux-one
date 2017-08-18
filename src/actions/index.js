@@ -141,14 +141,14 @@ export const stopSingleSong = () => ({
 });
 
 /**
-* @function requestHomeFeedsList
+* @function requestHomeFeeds
 * @param  {string} location {城市，用于获取所在城市的天气信息}
 * @param  {int}    id {首页是每天六点更新的，这是获取对应日期数据的id}
 * @param  {object} params  {uuid, user_id, platform, version}
 * @return {object} {type, payload}
 */
-export const requestHomeFeedsList = (location, id, params) => ({
-  type: ActionTypes.REQUESTED_HOME_FEEDS_LIST,
+export const requestHomeFeeds = (location, id, params) => ({
+  type: ActionTypes.REQUESTED_HOME_FEEDS,
   payload: {
     location,
     id,
@@ -158,13 +158,14 @@ export const requestHomeFeedsList = (location, id, params) => ({
 
 /**
 * @function receiveHomeFeedsList
-* @param  {array} dataList {接口返回的首页列表数据}
+* @param  {array} response {接口返回的首页列表数据}
 * @return {object} {type, payload}
 */
-export const receiveHomeFeedsList = dataList => ({
-  type: ActionTypes.RECEIVED_HOME_FEEDS_LIST,
+export const receiveHomeFeedsList = (key, response) => ({
+  type: ActionTypes.RECEIVED_HOME_FEEDS,
   payload: {
-    dataList
+    key,
+    response
   }
 });
 
