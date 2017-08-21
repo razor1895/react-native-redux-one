@@ -6,9 +6,9 @@ import {
   Dimensions,
   processColor,
   Image,
-  ImageBackground
+  TouchableOpacity
 } from 'react-native';
-import { heart, heartFill, share } from '../images';
+import { HEART, HEART_FILL, SHARE, DIARY, COLLECT, COLLECTED } from '../images';
 
 const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
@@ -24,14 +24,6 @@ const styles = StyleSheet.create({
     height: 200,
     // resizeMode: 'stretch',
     marginBottom: 12,
-  },
-  volume: {
-    position: 'absolute',
-    color: '#dadada',
-    left: 10,
-    top: 5,
-    backgroundColor: 'transparent',
-    fontSize: 12,
   },
   title: {
     textAlign: 'center',
@@ -66,33 +58,46 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   category: {
-    marginLeft: 20,
-    color: '#888',
+    color: '#a7a7a7',
     fontSize: 12,
     alignSelf: 'center',
-    fontWeight: '300'
+  },
+  diary: {
+    marginLeft: 20,
+    width: 16,
+    height: 16,
+    resizeMode: 'cover',
+    marginRight: 5
   },
   heartsCount: {
-    color: '#ddd',
-    fontSize: 8.4,
+    color: '#a7a7a7',
+    fontSize: 10,
     marginRight: 5,
+    alignSelf: 'flex-start',
+    position: 'absolute',
+    top: -5,
+    left: 18,
+    width: 30
   },
   heart: {
     width: 16,
     height: 16,
-    resizeMode: 'contain'
+    resizeMode: 'cover'
   },
-  circle: {
-    width: 4,
-    height: 4,
-    borderRadius: 50,
-    backgroundColor: '#e2e2e2',
-    marginHorizontal: 20
+  collect: {
+    width: 16,
+    height: 16,
+    resizeMode: 'cover'
   },
   share: {
-    width: 14,
-    height: 14,
-    resizeMode: 'contain'
+    width: 16,
+    height: 16,
+    resizeMode: 'cover'
+  },
+  operationGroup: {
+    width: 124,
+    justifyContent: 'space-between',
+    position: 'relative'
   }
 });
 
@@ -101,6 +106,8 @@ export default class PictureCard extends Component {
     super(props);
     this.state = {
       imageHeight: 200,
+      liked: false,
+      collected: false
     };
   }
 
@@ -111,7 +118,16 @@ export default class PictureCard extends Component {
   }
 
   getPictureSize = (uri) => {
-    Image.getSize(uri, (imageWidth, imageHeight) => this.setState({ imageHeight: imageHeight * (width / imageWidth) }));
+    Image.getSize(uri, (imageWidth, imageHeight) =>
+      this.setState({ imageHeight: imageHeight * (width / imageWidth) }));
+  }
+
+  toggleLike = () => {
+    this.setState({ liked: !this.state.liked });
+  }
+
+  toggleCollect = () => {
+    this.setState({ collected: !this.state.collected });
   }
 
   render() {
@@ -119,19 +135,24 @@ export default class PictureCard extends Component {
 
     return (
       <View style={styles.cardContainer} id={data.get('id')}>
-        <ImageBackground source={{ uri: data.get('img_url') }} style={[styles.picture, { height: this.state.imageHeight }]} >
-          <Text style={styles.volume}>{data.get('volume')}</Text>
-        </ImageBackground>
+        <Image source={{ uri: data.get('img_url') }} style={[styles.picture, { height: this.state.imageHeight }]} />
         <Text style={styles.title}>{data.get('title')} | {data.get('pic_info')}</Text>
         <Text style={styles.info}>{data.get('forward')}</Text>
         <Text style={styles.quoteAuthor}>{data.get('words_info')}</Text>
         <View style={styles.bottom}>
-          <Text style={styles.category}>小记</Text>
           <View style={styles.buttonGroup}>
+            <Image style={styles.diary} source={DIARY} />
+            <Text style={styles.category}>小记</Text>
+          </View>
+          <View style={[styles.buttonGroup, styles.operationGroup]}>
+            <TouchableOpacity onPress={this.toggleLike}>
+              <Image style={styles.heart} source={this.state.liked ? HEART_FILL : HEART} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.toggleCollect}>
+              <Image style={styles.collect} source={this.state.collected ? COLLECTED : COLLECT} />
+            </TouchableOpacity>
             <Text style={styles.heartsCount}>{data.get('like_count')}</Text>
-            <Image style={styles.heart} source={heart} />
-            <View style={styles.circle} />
-            <Image style={styles.share} source={share} />
+            <Image style={styles.share} source={SHARE} />
           </View>
         </View>
       </View>

@@ -12,9 +12,7 @@ import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
 import PictureCard from '../../components/PictureCard';
-import StoryCard from '../../components/StoryCard';
-import MusicCard from '../../components/MusicCard';
-import MovieCard from '../../components/MovieCard';
+import Card from '../../components/Card';
 import SlideList from '../../components/SlideList';
 import { search, user } from '../../images';
 import { requestHomeFeeds, requestHomeIdList } from '../../actions';
@@ -84,16 +82,14 @@ class HomeList extends Component {
     if (category === 0) {
       cardComponent = <PictureCard data={item} />;
     } else if (category === 4) {
-      cardComponent = <MusicCard data={item} />;
+      cardComponent = <Card data={item} cardType={'music'} />;
     } else if ([1, 2, 3].indexOf(category) > -1) {
-      cardComponent = <StoryCard data={item} source="summary" />;
+      cardComponent = <Card data={item} cardType={'story'} source="summary" />;
     } else if (category === 5) {
-      cardComponent = <MovieCard data={item} />;
+      cardComponent = <Card data={item} cardType={'movie'} />;
     } else if (category === -1) {
       cardComponent = <SlideList data={item} />;
     }
-
-    console.log(cardComponent);
 
     return cardComponent;
   }
