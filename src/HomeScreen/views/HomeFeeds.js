@@ -5,6 +5,7 @@ import {
   FlatList,
   Platform,
   Text,
+  Dimensions,
 } from 'react-native';
 import { connect } from 'react-redux';
 import Immutable from 'immutable';
@@ -14,29 +15,61 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import PictureCard from '../../components/PictureCard';
 import Card from '../../components/Card';
 import SlideList from '../../components/SlideList';
+import RadioCard from '../../components/RadioCard';
 import { search, user } from '../../images';
 import { requestHomeFeeds, requestHomeIdList } from '../../actions';
 import { getCityName } from '../../services/home';
 
+const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f6f6f6'
+    backgroundColor: '#eee'
   },
-//   iconSearch: {
-//     width: 22,
-//     height: 22,
-//     marginRight: 15,
-//     resizeMode: 'cover'
-//   },
-//   iconUser: {
-//     width: 22,
-//     height: 22,
-//     marginLeft: 15,
-//     resizeMode: 'contain'
-//   }
+  //   iconSearch: {
+  //     width: 22,
+  //     height: 22,
+  //     marginRight: 15,
+  //     resizeMode: 'cover'
+  //   },
+  //   iconUser: {
+  //     width: 22,
+  //     height: 22,
+  //     marginLeft: 15,
+  //     resizeMode: 'contain'
+  //   }
+  header: {
+    height: 64,
+    backgroundColor: '#fff',
+    width,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  weather: {
+    marginTop: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  city: {
+    fontSize: 10,
+    color: 'rgb(90,90,90)'
+  },
+  weatherDetail: {
+    fontSize: 10,
+    paddingLeft: 20,
+    color: 'rgb(90,90,90)'
+  },
+  date: {
+    fontSize: 18,
+    letterSpacing: 4,
+    fontWeight: '300',
+    color: 'rgb(90,90,90)'
+  },
+  dateMonth: {
+    marginHorizontal: 19
+  }
 });
 
 class HomeList extends Component {
@@ -75,7 +108,7 @@ class HomeList extends Component {
     let cardComponent = null;
     let category = -1;
 
-    if (index !== 1) {
+    if (![1, 9, 10].includes(index)) {
       category = parseInt(item.get('category'), 10);
     }
 
@@ -89,6 +122,8 @@ class HomeList extends Component {
       cardComponent = <Card data={item} cardType={'movie'} />;
     } else if (category === -1) {
       cardComponent = <SlideList data={item} />;
+    } else if (category === 8) {
+      cardComponent = <RadioCard data={item} />
     }
 
     return cardComponent;
@@ -97,14 +132,30 @@ class HomeList extends Component {
   render() {
     const feed = this.props.feeds.get(0);
     let data = [];
+    let date = ['', '', ''];
+    let weather = {};
 
     if (feed) {
       data = feed.get('content_list').toArray();
       data.splice(1, 0, feed.get('menu'));
+      date = feed.get('date').split(' ')[0].split('-');
+      weather = feed.get('weather').toJS();
     }
 
     return (
       <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.date}>
+            {`${date[0]} / `}
+            <Text style={styles.dateMonth}>{date[1]}</Text>
+            {` / ${date[2]} `}
+          </Text>
+          <View style={styles.weather}>
+            <Text style={styles.city}>{weather.city_name}</Text>
+            <Text style={styles.weatherDetail}>{weather.climate}</Text>
+            <Text style={styles.weatherDetail}>{weather.temperature}℃</Text>
+          </View>
+        </View>
         <FlatList
           data={data}
           keyExtractor={this.keyExtractor}
