@@ -9,13 +9,13 @@ const MOVIE_ACTIVE = require('./movie_active.png');
 const SEARCH = require('./search.png');
 const USER = require('./user.png');
 const USER_HAS_MSG = require('./user_has_new_msg.png');
-const HEART = require('./heart.png');
-const HEART_FILL = require('./heart_filled.png');
+const HEART = require('./feeds_laud_default.png');
+const HEART_FILL = require('./feeds_laud_selected.png');
 const SHARE = require('./feeds_share.png');
 const MOVE_BACKGROUND = require('./feeds_movie.png');
 const MUSIC_PLAY = require('./play.png');
 const MUSIC_PAUSE = require('./pause.png');
-const MUSIC_STORY = require('./feeds_music_story.png');
+const MUSIC_STORY = require('./feeds_music_words.png');
 const MUSIC_BACKGROUND = require('./feeds_music.png');
 const XIAMI_LOGO = require('./xiami_right.png');
 const ONE = require('./one_line.png');
@@ -24,6 +24,9 @@ const ALL = require('./all_line.png');
 const ALL_FILL = require('./all_fill.png');
 const ME = require('./me_line.png');
 const ME_FILL = require('./me_fill.png');
+const DIARY = require('./diary_icon.png');
+const COLLECT = require('./bubble_collect.png');
+const COLLECTED = require('./bubble_collected.png');
 
 export {
   HOME,
@@ -51,5 +54,8 @@ export {
   ALL,
   ALL_FILL,
   ME,
-  ME_FILL
+  ME_FILL,
+  DIARY,
+  COLLECT,
+  COLLECTED
 };
