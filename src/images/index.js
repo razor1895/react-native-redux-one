@@ -27,6 +27,7 @@ const ME_FILL = require('./me_fill.png');
 const DIARY = require('./diary_icon.png');
 const COLLECT = require('./bubble_collect.png');
 const COLLECTED = require('./bubble_collected.png');
+const FEEDS_BOTTOM = require('./feeds_bottom_image.png');
 
 export {
   HOME,
@@ -57,5 +58,6 @@ export {
   ME_FILL,
   DIARY,
   COLLECT,
-  COLLECTED
+  COLLECTED,
+  FEEDS_BOTTOM
 };
