@@ -14,7 +14,6 @@ const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   cardContainer: {
     width,
-    marginTop: 22,
     paddingBottom: 15,
     backgroundColor: processColor('#fff'),
     marginBottom: 5,
