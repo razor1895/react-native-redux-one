@@ -5,16 +5,17 @@ import {
   StyleSheet,
   Dimensions,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  TouchableWithoutFeedback
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-import { HEART, HEART_FILL, SHARE } from '../images';
+import GifIcon from './GifIcon';
+import { HEART, HEART_FILL, SHARE, RADIO_LOGO, FEEDS_RADIO_PLAY, FEEDS_RADIO_PAUSE } from '../images';
 
 const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
-    marginTop: 5,
     height: 240,
     width,
     position: 'relative'
@@ -27,6 +28,15 @@ const styles = StyleSheet.create({
     height: 240,
     zIndex: 10,
   },
+  radioLogo: {
+    position: 'absolute',
+    left: 20,
+    top: 16,
+    width: 30,
+    height: 35,
+    resizeMode: 'cover',
+    zIndex: 12
+  },
   background: {
     position: 'absolute',
     left: 0,
@@ -36,7 +46,20 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   fmInfo: {
-    paddingLeft: 20,
+    position: 'absolute',
+    left: 20,
+    height: 45,
+    width,
+    bottom: 65,
+    zIndex: 12,
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  actionIcon: {
+    width: 32,
+    height: 32,
+    resizeMode: 'cover',
+    marginRight: 12,
   },
   titleInfo: {
     position: 'absolute',
@@ -49,10 +72,13 @@ const styles = StyleSheet.create({
     color: '#a7a7a7'
   },
   volume: {
+    fontSize: 12,
     backgroundColor: 'transparent',
     color: '#fff',
+    marginBottom: 14
   },
   title: {
+    fontSize: 18,
     backgroundColor: 'transparent',
     color: '#fff'
   },
@@ -66,6 +92,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 20,
+    zIndex: 12,
   },
   heartsCount: {
     color: '#a7a7a7',
@@ -105,6 +132,15 @@ const styles = StyleSheet.create({
   author: {
     color: '#a7a7a7',
     fontSize: 12,
+    backgroundColor: 'transparent'
+  },
+  iconContainer: {
+    justifyContent: 'center'
+  },
+  playIcon: {
+    width: 20,
+    height: 20,
+    resizeMode: 'cover'
   }
 });
 
@@ -112,7 +148,8 @@ export default class RadioCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      liked: false
+      liked: false,
+      playing: false,
     };
   }
 
@@ -120,13 +157,17 @@ export default class RadioCard extends Component {
     this.setState({ liked: !this.state.liked });
   }
 
+  toggleRadioPlayStatus = () => {
+    this.setState({ playing: !this.state.playing });
+  }
+
   render() {
     const { data } = this.props;
 
     return (
       <View style={styles.container}>
-        {data.get('volume')
-          ? (
+        {
+          data.get('volume') ? (
             <LinearGradient
               start={{ x: 0.0, y: 0.0 }}
               locations={[0.0, 1.0]}
@@ -137,15 +178,38 @@ export default class RadioCard extends Component {
           ) : null
         }
         <Image style={styles.background} source={{ uri: data.get('img_url') }} />
+        <Image style={styles.radioLogo} source={RADIO_LOGO} />
         <View style={data.get('volume') ? styles.fmInfo : styles.titleInfo}>
-          <Text style={styles.volume}>{data.get('volume')}</Text>
-          <Text style={[styles.title, !data.get('volume') && styles.smallTitle]}>{data.get('title')}</Text>
+          <TouchableWithoutFeedback onPress={this.toggleRadioPlayStatus}>
+            <Image
+              source={this.state.playing ? FEEDS_RADIO_PAUSE : FEEDS_RADIO_PLAY}
+              style={styles.actionIcon}
+            />
+          </TouchableWithoutFeedback>
+          <View>
+            <Text style={styles.volume}>{data.get('volume')}</Text>
+            <Text style={[styles.title, !data.get('volume') && styles.smallTitle]}>{data.get('title')}</Text>
+          </View>
         </View>
         <View style={styles.cardFooter}>
-          <View style={styles.authorInfo}>
-            <Image style={styles.avatar} source={{ uri: data.get('author').get('web_url') }} />
-            <Text style={styles.author}>{data.get('author').get('user_name')}</Text>
-          </View>
+          {
+            data.get('volume') ? (
+              <View style={styles.authorInfo}>
+                <Image style={styles.avatar} source={{ uri: data.get('author').get('web_url') }} />
+                <Text style={styles.author}>{data.get('author').get('user_name')}</Text>
+              </View>
+            ) : (
+              <TouchableOpacity onPress={this.toggleRadioPlayStatus} style={styles.iconContainer}>
+                <GifIcon
+                  icon={'VOICE_FM_0'}
+                  startNum={0}
+                  endNum={2}
+                  playing={this.state.playing}
+                  style={styles.playIcon}
+                />
+              </TouchableOpacity>
+            )
+          }
           <View style={styles.buttonGroup}>
             <TouchableOpacity onPress={this.toggleLike}>
               <Image style={styles.heart} source={this.state.liked ? HEART_FILL : HEART} />
