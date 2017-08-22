@@ -3804,6 +3804,12 @@ react-native-sound@^0.10.3:
   version "0.10.3"
   resolved "http://registry.npm.taobao.org/react-native-sound/download/react-native-sound-0.10.3.tgz#0faf4f101d46c51315c91d701783c0c6a4db3bf6"
 
+react-native-swiper@^1.5.10:
+  version "1.5.10"
+  resolved "http://registry.npm.taobao.org/react-native-swiper/download/react-native-swiper-1.5.10.tgz#20569b85623bdd3f667a376999b3844007d11dc1"
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-tab-view@^0.0.67:
   version "0.0.67"
   resolved "http://registry.npm.taobao.org/react-native-tab-view/download/react-native-tab-view-0.0.67.tgz#cdd146fe5e5d4baff6c89f2d5d0b15fa23db39d0"

@@ -17,6 +17,7 @@
 		"react-native-linear-gradient": "^2.2.0",
 		"react-native-music-control": "^0.4.7",
 		"react-native-sound": "^0.10.3",
+		"react-native-swiper": "^1.5.10",
 		"react-native-vector-icons": "^4.3.0",
 		"react-navigation": "1.0.0-beta.12",
 		"react-redux": "^5.0.6",
