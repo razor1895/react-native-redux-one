@@ -1,4 +1,6 @@
+import { Platform } from 'react-native';
 import { Observable } from 'rxjs/Observable';
+
 import rootConfig from '../config';
 
 const urlPrefix = rootConfig.domain + rootConfig.apiPath;
@@ -27,7 +29,7 @@ function consoleOutput(res) {
 
 export function get(urlPath, params) {
   let url = urlPrefix + urlPath;
-  const body = Object.assign({ version: rootConfig.apiVersion }, params);
+  const body = Object.assign({ version: rootConfig.apiVersion, platform: Platform.OS }, params);
 
   const urlEncodeKeys = Object.keys(body).map(v => `${v}=${body[v]}`).join('&');
   url += `?${urlEncodeKeys}`;
