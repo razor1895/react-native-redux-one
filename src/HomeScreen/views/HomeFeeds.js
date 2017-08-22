@@ -6,6 +6,7 @@ import {
   Platform,
   Text,
   Dimensions,
+  Image
 } from 'react-native';
 import { connect } from 'react-redux';
 import Immutable from 'immutable';
@@ -16,7 +17,7 @@ import PictureCard from '../../components/PictureCard';
 import Card from '../../components/Card';
 import SlideList from '../../components/SlideList';
 import RadioCard from '../../components/RadioCard';
-import { search, user } from '../../images';
+import { FEEDS_BOTTOM } from '../../images';
 import { requestHomeFeeds, requestHomeIdList } from '../../actions';
 import { getCityName } from '../../services/home';
 
@@ -69,6 +70,18 @@ const styles = StyleSheet.create({
   },
   dateMonth: {
     marginHorizontal: 19
+  },
+  feedsBottomWrapper: {
+    width,
+    height: 170,
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  feedsBottomImage: {
+    width: 140,
+    height: 100,
+    resizeMode: 'cover'
   }
 });
 
@@ -129,6 +142,12 @@ class HomeList extends Component {
     return cardComponent;
   }
 
+  renderFeedsBottom = () => (
+    <View style={styles.feedsBottomWrapper}>
+      <Image source={FEEDS_BOTTOM} style={styles.feedsBottomImage} />
+    </View>
+  )
+
   render() {
     const feed = this.props.feeds.get(0);
     let data = [];
@@ -160,6 +179,7 @@ class HomeList extends Component {
           data={data}
           keyExtractor={this.keyExtractor}
           renderItem={this.renderCard}
+          ListFooterComponent={this.renderFeedsBottom}
         />
       </View>
     );
