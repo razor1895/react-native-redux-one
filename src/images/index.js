@@ -31,6 +31,9 @@ const FEEDS_BOTTOM = require('./feeds_bottom_image.png');
 const FEEDS_RADIO_PLAY = require('./feeds_radio_play.png');
 const FEEDS_RADIO_PAUSE = require('./feeds_radio_pause.png');
 const RADIO_LOGO = require('./fm_logo_white.png');
+const VOICE_FM_00 = require('./voice_fm_00.png');
+const VOICE_FM_01 = require('./voice_fm_01.png');
+const VOICE_FM_02 = require('./voice_fm_02.png');
 
 export {
   HOME,
@@ -65,5 +68,8 @@ export {
   FEEDS_BOTTOM,
   FEEDS_RADIO_PLAY,
   FEEDS_RADIO_PAUSE,
-  RADIO_LOGO
+  RADIO_LOGO,
+  VOICE_FM_00,
+  VOICE_FM_01,
+  VOICE_FM_02
 };
