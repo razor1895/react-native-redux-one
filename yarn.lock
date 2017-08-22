@@ -2219,7 +2219,11 @@ hoek@2.x.x:
   version "2.16.3"
   resolved "http://registry.npm.taobao.org/hoek/download/hoek-2.16.3.tgz#20bb7403d3cea398e91dc4710a8ff1b8274a25ed"
 
-hoist-non-react-statics@^2.2.0, hoist-non-react-statics@^2.2.1:
+hoist-non-react-statics@^2.2.0:
+  version "2.3.0"
+  resolved "http://registry.npm.taobao.org/hoist-non-react-statics/download/hoist-non-react-statics-2.3.0.tgz#ede16318c2ff1f9fe3a025396ba06fd4c44608bb"
+
+hoist-non-react-statics@^2.2.1:
   version "2.2.2"
   resolved "http://registry.npm.taobao.org/hoist-non-react-statics/download/hoist-non-react-statics-2.2.2.tgz#c0eca5a7d5a28c5ada3107eb763b01da6bfa81fb"
 
@@ -3786,6 +3790,12 @@ react-native-htmlview@^0.12.0:
     entities "^1.1.1"
     htmlparser2-without-node-native "^3.9.0"
 
+react-native-linear-gradient@^2.2.0:
+  version "2.2.0"
+  resolved "http://registry.npm.taobao.org/react-native-linear-gradient/download/react-native-linear-gradient-2.2.0.tgz#7d9ff9fc3e413079cf3c7354873eaf923145364d"
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-music-control@^0.4.7:
   version "0.4.7"
   resolved "http://registry.npm.taobao.org/react-native-music-control/download/react-native-music-control-0.4.7.tgz#8f0344a54757426559d4a7ddfe61177d98fb31ce"
@@ -3895,7 +3905,7 @@ react-native@0.47.1:
     xtend ">=4.0.0 <4.1.0-0"
     yargs "^6.4.0"
 
-react-navigation@^1.0.0-beta.11:
+react-navigation@1.0.0-beta.12:
   version "1.0.0-beta.12"
   resolved "http://registry.npm.taobao.org/react-navigation/download/react-navigation-1.0.0-beta.12.tgz#cf0f04ffbf9fefe41f5c5a1dab92106b48a29f0a"
   dependencies:
