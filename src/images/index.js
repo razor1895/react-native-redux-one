@@ -28,6 +28,9 @@ const DIARY = require('./diary_icon.png');
 const COLLECT = require('./bubble_collect.png');
 const COLLECTED = require('./bubble_collected.png');
 const FEEDS_BOTTOM = require('./feeds_bottom_image.png');
+const FEEDS_RADIO_PLAY = require('./feeds_radio_play.png');
+const FEEDS_RADIO_PAUSE = require('./feeds_radio_pause.png');
+const RADIO_LOGO = require('./fm_logo_white.png');
 
 export {
   HOME,
@@ -59,5 +62,8 @@ export {
   DIARY,
   COLLECT,
   COLLECTED,
-  FEEDS_BOTTOM
+  FEEDS_BOTTOM,
+  FEEDS_RADIO_PLAY,
+  FEEDS_RADIO_PAUSE,
+  RADIO_LOGO
 };
