@@ -13,7 +13,7 @@ const StatusBarEncapsulation = ({ backgroundColor, ...props }) => {
     );
   }
 
-  return null;
+  return <StatusBar hidden />;
 };
 
 StatusBarEncapsulation.propTypes = {

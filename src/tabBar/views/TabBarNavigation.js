@@ -14,7 +14,7 @@ const TabBarNavigation = (props) => {
   // const { dispatch, navigationState } = props;
   return (
     <View style={containerStyle}>
-      <StatusBarEncapsulation backgroundColor="#5E8D48" barStyle="light-content" hidden />
+      <StatusBarEncapsulation backgroundColor="#5E8D48" barStyle="dark-content" hidden />
       <TabBar />
     </View>
   );
