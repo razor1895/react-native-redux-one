@@ -218,3 +218,59 @@ export const receiveStory = data => ({
     data
   }
 });
+
+export const requestTopicList = params => ({
+  type: ActionTypes.REQUESTED_TOPIC_LIST,
+  payload: {
+    params
+  }
+});
+
+export const receivedTopicList = data => ({
+  type: ActionTypes.RECEIVED_TOPIC_LIST,
+  payload: {
+    data
+  }
+});
+
+export const requestBannerList = params => ({
+  type: ActionTypes.REQUESTED_BANNER_LIST,
+  payload: {
+    params
+  }
+});
+
+export const receivedBannerList = data => ({
+  type: ActionTypes.RECEIVED_BANNER_LIST,
+  payload: {
+    data
+  }
+});
+
+export const requestQAList = params => ({
+  type: ActionTypes.REQUESTED_QA_LIST,
+  payload: {
+    params
+  }
+});
+
+export const receivedQAList = data => ({
+  type: ActionTypes.RECEIVED_QA_LIST,
+  payload: {
+    data
+  }
+});
+
+export const requestHotAuthorList = params => ({
+  type: ActionTypes.REQUESTED_HOT_AUTHOR_LIST,
+  payload: {
+    params
+  }
+});
+
+export const receivedHotAuthorList = data => ({
+  type: ActionTypes.RECEIVED_HOT_AUTHOR_LIST,
+  payload: {
+    data
+  }
+});
