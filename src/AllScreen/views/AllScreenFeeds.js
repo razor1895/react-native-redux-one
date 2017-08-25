@@ -7,7 +7,8 @@ import {
   Text,
   FlatList,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
+  TouchableHighlight
 } from 'react-native';
 import { connect } from 'react-redux';
 import Immutable from 'immutable';
@@ -56,7 +57,8 @@ const styles = StyleSheet.create({
     height: 240,
     backgroundColor: '#fff',
     paddingHorizontal: 20,
-    paddingTop: 13
+    paddingTop: 13,
+    marginBottom: 10,
   },
   tabImage: {
     width: width - 40,
@@ -70,7 +72,6 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     padding: 20,
-    marginTop: 10,
     backgroundColor: '#fff',
     position: 'relative',
     paddingBottom: 30
@@ -108,7 +109,6 @@ const styles = StyleSheet.create({
     ]
   },
   authorCard: {
-    marginTop: 10,
     paddingHorizontal: 20,
     paddingTop: 14,
     backgroundColor: '#fff'
@@ -178,7 +178,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
   QACard: {
-    marginTop: 10,
     backgroundColor: '#fff',
     paddingTop: 14,
     paddingBottom: 30
@@ -234,6 +233,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     backgroundColor: 'transparent',
     zIndex: 12
+  },
+  separator: {
+    height: 10,
+    backgroundColor: 'transparent'
   }
 });
 
@@ -259,23 +262,33 @@ class TopicFeeds extends Component {
     this.props.requestHotAuthorList();
   }
 
+  navigateToContent = (path, params) => {
+    this.props.navigation.navigate(path, params);
+  }
+
   keyExtractor = item => item.get('id');
 
   renderListHeader = () => {
     if (this.props.banners.size) {
       return (
-        <Swiper
-          style={styles.wrapper}
-          autoplay
-          height={234}
-          containerStyle={styles.swiperContainerStyle}
-          removeClippedSubviews={false}
-          dot={<View style={styles.dot} />}
-          activeDot={<View style={styles.activeDot} />}
-          paginationStyle={styles.paginationStyle}
-        >
-          {this.renderSwiperItem(this.props.banners.toArray())}
-        </Swiper>
+        <View>
+          <Swiper
+            style={styles.wrapper}
+            autoplay
+            height={234}
+            containerStyle={styles.swiperContainerStyle}
+            removeClippedSubviews={false}
+            dot={<View style={styles.dot} />}
+            activeDot={<View style={styles.activeDot} />}
+            paginationStyle={styles.paginationStyle}
+          >
+            {this.renderSwiperItem(this.props.banners.toArray())}
+          </Swiper>
+          <View style={styles.tab}>
+            <Text style={styles.cardText}>分类导航</Text>
+            <Image source={{ uri: 'http://image.wufazhuce.com/alltab-toc.png?v=4.3.1' }} style={styles.tabImage} />
+          </View>
+        </View>
       );
     }
 
@@ -287,14 +300,7 @@ class TopicFeeds extends Component {
   ));
 
   renderTopicCard = ({ item }) => {
-    if (item.get('id') === 'tab') {
-      return (
-        <View style={styles.tab}>
-          <Text style={styles.cardText}>分类导航</Text>
-          <Image source={{ uri: 'http://image.wufazhuce.com/alltab-toc.png?v=4.3.1' }} style={styles.tabImage} />
-        </View>
-      );
-    } else if (item.get('id') === 'author') {
+    if (item.get('id') === 'author') {
       return (
         <View style={styles.authorCard}>
           <Text style={styles.tabText}>近期热门作者</Text>
@@ -345,12 +351,17 @@ class TopicFeeds extends Component {
     }
 
     return (
-      <View style={styles.cardContainer}>
-        <Image source={{ uri: item.get('cover') }} style={styles.cardImage} />
-        <View style={styles.cardBage} />
-        <Text style={styles.badgeText}>专题</Text>
-        <Text style={styles.cardTitle}>{ item.get('title') }</Text>
-      </View>
+      <TouchableHighlight
+        underlayColor={'#000'}
+        onPress={() => this.navigateToContent('TopicDetail', { content_id: item.get('content_id'), source_id: item.get('id'), source: 'banner' })}
+      >
+        <View style={styles.cardContainer}>
+          <Image source={{ uri: item.get('cover') }} style={styles.cardImage} />
+          <View style={styles.cardBage} />
+          <Text style={styles.badgeText}>专题</Text>
+          <Text style={styles.cardTitle}>{ item.get('title') }</Text>
+        </View>
+      </TouchableHighlight>
     );
   }
 
@@ -358,14 +369,16 @@ class TopicFeeds extends Component {
   render() {
     const { banners, topics, authors, QAs } = this.props;
     const data = topics.size > 0 ? topics.toArray() : [];
-    data.splice(0, 0, Immutable.Map({ id: 'tab' }));
-    data.splice(5, 0, Immutable.fromJS({ id: 'author', authors }));
-    data.splice(6, 0, Immutable.fromJS({ id: 'QAs', QAs }));
+    data.splice(4, 0, Immutable.fromJS({ id: 'author', authors }));
+    data.splice(5, 0, Immutable.fromJS({ id: 'QAs', QAs }));
 
     return (
       <View style={styles.container}>
         <FlatList
           ListHeaderComponent={this.renderListHeader}
+          ItemSeparatorComponent={({ highlighted }) => (
+            <View style={[styles.separator, highlighted]} />
+          )}
           data={data}
           keyExtractor={this.keyExtractor}
           renderItem={this.renderTopicCard}
