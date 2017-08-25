@@ -29,3 +29,14 @@ export const getCurrentId = () => {
 
   return config.baseId + parseInt(day, 10);
 };
+
+export const toCamelCase = (str) => {
+  const strArrary = str.split('-');
+  const resultArray = [];
+
+  strArrary.slice(1).forEach((v) => {
+    resultArray.push(v[0].toUpperCase() + v.slice(1));
+  });
+
+  return strArrary[0] + resultArray.join('');
+};
