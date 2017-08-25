@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   },
   smallTitle: {
     fontSize: 12,
-    color: '#a7a7a7'
+    color: '#a6a6a6'
   },
   volume: {
     fontSize: 12,
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     zIndex: 12,
   },
   heartsCount: {
-    color: '#a7a7a7',
+    color: '#a6a6a6',
     fontSize: 10,
     marginRight: 5,
     alignSelf: 'flex-start',
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     marginRight: 12,
   },
   author: {
-    color: '#a7a7a7',
+    color: '#a6a6a6',
     fontSize: 12,
     backgroundColor: 'transparent'
   },
@@ -180,12 +180,16 @@ export default class RadioCard extends Component {
         <Image style={styles.background} source={{ uri: data.get('img_url') }} />
         <Image style={styles.radioLogo} source={RADIO_LOGO} />
         <View style={data.get('volume') ? styles.fmInfo : styles.titleInfo}>
-          <TouchableWithoutFeedback onPress={this.toggleRadioPlayStatus}>
-            <Image
-              source={this.state.playing ? FEEDS_RADIO_PAUSE : FEEDS_RADIO_PLAY}
-              style={styles.actionIcon}
-            />
-          </TouchableWithoutFeedback>
+          {
+            data.get('volume') ? (
+              <TouchableWithoutFeedback onPress={this.toggleRadioPlayStatus}>
+                <Image
+                  source={this.state.playing ? FEEDS_RADIO_PAUSE : FEEDS_RADIO_PLAY}
+                  style={styles.actionIcon}
+                />
+              </TouchableWithoutFeedback>
+            ) : null
+          }
           <View>
             <Text style={styles.volume}>{data.get('volume')}</Text>
             <Text style={[styles.title, !data.get('volume') && styles.smallTitle]}>{data.get('title')}</Text>

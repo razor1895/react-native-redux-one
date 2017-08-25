@@ -19,26 +19,24 @@ const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   cardContainer: {
     width,
-    paddingBottom: 15,
     backgroundColor: processColor('#fff'),
     marginBottom: 5,
   },
   label: {
-    color: '#8a8a8a',
+    color: '#a6a6a6',
     textAlign: 'center',
-    fontSize: 10,
-    marginTop: 10,
-    marginBottom: 20,
-    fontWeight: '200',
+    fontSize: 12,
+    marginTop: 12,
   },
   title: {
+    marginTop: 12,
     paddingLeft: 20,
     marginBottom: 15,
     color: '#333',
     fontWeight: '300',
     fontSize: 20,
     width: width - 20,
-    lineHeight: 20
+    lineHeight: 30
   },
   info: {
     paddingLeft: 20,
@@ -47,18 +45,19 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   brief: {
+    marginTop: 3,
     paddingLeft: 20,
     width: width - 20,
     fontSize: 14,
-    lineHeight: 30,
-    color: '#848484',
-    marginBottom: 10
+    lineHeight: 28,
+    color: '#808080',
   },
   bottom: {
-    marginTop: 10,
+    marginTop: 20,
     flexDirection: 'row',
     width: width - 20,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    height: 40,
   },
   buttonGroup: {
     flexDirection: 'row',
@@ -68,24 +67,27 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     width: width - 20,
     fontSize: 14,
-    color: '#A7A7A7',
-    marginBottom: 15
+    color: '#a6a6a6',
   },
   time: {
     marginLeft: 20,
-    color: '#a7a7a7',
+    color: '#a6a6a6',
     fontSize: 12,
-    alignSelf: 'flex-end'
+    marginTop: 2,
+    lineHeight: 32,
   },
   heartsCount: {
-    color: '#a7a7a7',
-    fontSize: 10,
-    marginRight: 5,
-    alignSelf: 'flex-start',
+    color: '#a6a6a6',
+    fontSize: 12,
     position: 'relative',
-    top: -5,
-    marginLeft: 2,
-    width: 30
+    top: -2,
+  },
+  heartGroup: {
+    position: 'absolute',
+    right: 17,
+    minWidth: 50,
+    zIndex: 5,
+    flexDirection: 'row'
   },
   heart: {
     width: 16,
@@ -95,7 +97,9 @@ const styles = StyleSheet.create({
   share: {
     width: 16,
     height: 16,
-    resizeMode: 'cover'
+    marginTop: 3,
+    resizeMode: 'cover',
+    zIndex: 6,
   }
 });
 
@@ -106,6 +110,26 @@ export default class MusicCard extends Component {
 
   toggleLike = () => {
     this.setState({ liked: !this.state.liked });
+  }
+
+  renderCardLabel = (category, tagList) => {
+    let title = '';
+
+    if (category === '1' && tagList.size > 0) {
+      title = tagList.get(0).get('title');
+    } else if (category === '1') {
+      title = '阅读';
+    } else if (category === '2') {
+      title = '连载';
+    } else if (category === '3') {
+      title = '问答';
+    } else if (category === '4') {
+      title = '音乐';
+    } else if (category === '5') {
+      title = '影视';
+    }
+
+    return title;
   }
 
   renderCardContent = (cardType, data) => {
@@ -123,7 +147,7 @@ export default class MusicCard extends Component {
 
     return (
       <View style={styles.cardContainer}>
-        <Text style={styles.label}>- {data.get('tag_list').size === 0 ? '音乐' : data.get('tag_list').get(0).get('title')} -</Text>
+        <Text style={styles.label}>- {this.renderCardLabel(data.get('category'), data.get('tag_list'))} -</Text>
         <Text style={styles.title}>{data.get('title')}</Text>
         <Text style={styles.info}>文 / {data.get('author').get('user_name')}</Text>
         {this.renderCardContent(cardType, data)}
@@ -132,10 +156,10 @@ export default class MusicCard extends Component {
         <View style={styles.bottom}>
           <Text style={styles.time}>{ formatDate(data.get('post_date')) }</Text>
           <View style={styles.buttonGroup}>
-            <TouchableOpacity onPress={this.toggleLike}>
+            <TouchableOpacity style={styles.heartGroup} onPress={this.toggleLike}>
               <Image style={styles.heart} source={this.state.liked ? HEART_FILL : HEART} />
+              <Text style={styles.heartsCount}>{data.get('like_count')}</Text>
             </TouchableOpacity>
-            <Text style={styles.heartsCount}>{data.get('like_count')}</Text>
             <Image style={styles.share} source={SHARE} />
           </View>
         </View>

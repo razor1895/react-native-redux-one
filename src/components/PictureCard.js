@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   category: {
-    color: '#a7a7a7',
+    color: '#a6a6a6',
     fontSize: 12,
     alignSelf: 'center',
   },
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     marginRight: 5
   },
   heartsCount: {
-    color: '#a7a7a7',
+    color: '#a6a6a6',
     fontSize: 10,
     marginRight: 5,
     alignSelf: 'flex-start',
