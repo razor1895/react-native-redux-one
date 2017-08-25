@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
   authorBrief: {
     width: 230,
     fontSize: 12,
-    color: '#a7a7a7'
+    color: '#a6a6a6'
   },
   actionBtn: {
     position: 'absolute',
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     borderWidth: 1.2,
   },
   actionBtnText: {
-    color: '#a7a7a7',
+    color: '#a6a6a6',
     fontSize: 12,
   },
   swapBtn: {
