@@ -4,3 +4,4 @@ export const getBannerList = formData => requestService.get('/banner/list/3', fo
 export const getTopicList = formData => requestService.get('/banner/list/4', formData);
 export const getQAList = formData => requestService.get('/banner/list/5', formData);
 export const getHotAuthorList = formData => requestService.get('/author/hot', formData);
+export const getTopicContent = (contentId, formData) => requestService.get(`/topic/htmlcontent/${contentId}`, formData);

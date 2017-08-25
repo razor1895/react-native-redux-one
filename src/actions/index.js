@@ -261,6 +261,21 @@ export const receivedQAList = data => ({
   }
 });
 
+export const requestTopicContent = (contentId, params) => ({
+  type: ActionTypes.REQUESTED_TOPIC_CONTENT,
+  payload: {
+    contentId,
+    params
+  }
+});
+
+export const receivedTopicContent = data => ({
+  type: ActionTypes.RECEIVED_TOPIC_CONTENT,
+  payload: {
+    data
+  }
+});
+
 export const requestHotAuthorList = params => ({
   type: ActionTypes.REQUESTED_HOT_AUTHOR_LIST,
   payload: {

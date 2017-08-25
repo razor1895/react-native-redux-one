@@ -6,7 +6,8 @@ const initialState = Immutable.fromJS({
   hotAuthors: [],
   QAs: [],
   banners: [],
-  topics: []
+  topics: [],
+  contents: {}
 });
 
 export default createReducer(initialState, {
@@ -14,4 +15,6 @@ export default createReducer(initialState, {
   [ActionTypes.RECEIVED_BANNER_LIST]: (state, action) => state.set('banners', Immutable.fromJS(action.payload.data)),
   [ActionTypes.RECEIVED_TOPIC_LIST]: (state, action) => state.set('topics', Immutable.fromJS(action.payload.data)),
   [ActionTypes.RECEIVED_QA_LIST]: (state, action) => state.set('QAs', Immutable.fromJS(action.payload.data)),
+  [ActionTypes.RECEIVED_TOPIC_CONTENT]: (state, { payload }) => state.update('contents', v =>
+    v.set(payload.data.id, Immutable.fromJS(payload.data))),
 });

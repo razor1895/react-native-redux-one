@@ -1,6 +1,12 @@
 import * as ActionTypes from '../ActionTypes';
 import * as topicService from '../services/topic';
-import { receivedHotAuthorList, receivedBannerList, receivedQAList, receivedTopicList } from '../actions';
+import {
+  receivedHotAuthorList,
+  receivedBannerList,
+  receivedQAList,
+  receivedTopicList,
+  receivedTopicContent
+} from '../actions';
 
 export const fetchHotAuthorsEpic = action$ =>
   action$.ofType(ActionTypes.REQUESTED_HOT_AUTHOR_LIST)
@@ -28,5 +34,12 @@ export const fetchTopicsEpic = action$ =>
     .switchMap(action =>
       topicService.getTopicList(action.payload.params)
         .map(res => receivedTopicList(res.data))
+    );
+
+export const fetchTopicContentEpic = action$ =>
+  action$.ofType(ActionTypes.REQUESTED_TOPIC_CONTENT)
+    .switchMap(({ payload }) =>
+      topicService.getTopicContent(payload.contentId, payload.params)
+        .map(res => receivedTopicContent(res.data))
     );
 

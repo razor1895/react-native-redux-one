@@ -6,7 +6,7 @@ import AllScreenFeedsDetail from './views/AllScreenFeedsDetail';
 
 const routeConfiguration = {
   AllScreenFeeds: { screen: AllScreenFeeds },
-  AllScreenFeedsDetail: { screen: AllScreenFeedsDetail },
+  TopicDetail: { screen: AllScreenFeedsDetail },
 };
 // going to disable the header for now
 
