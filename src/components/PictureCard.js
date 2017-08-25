@@ -14,7 +14,6 @@ const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   cardContainer: {
     width,
-    paddingBottom: 15,
     backgroundColor: processColor('#fff'),
     marginBottom: 5,
   },
@@ -26,31 +25,30 @@ const styles = StyleSheet.create({
   },
   title: {
     textAlign: 'center',
-    color: '#999',
-    fontWeight: '400',
+    color: '#a6a6a6',
     fontSize: 12,
     letterSpacing: 0.3,
-    marginBottom: 24,
+    marginBottom: 20,
   },
   info: {
     alignSelf: 'center',
     width: 300,
-    marginBottom: 24,
+    marginBottom: 23,
     fontSize: 14,
-    color: '#333',
-    fontWeight: '300',
-    lineHeight: 25,
+    color: '#666',
+    lineHeight: 30,
   },
   quoteAuthor: {
     textAlign: 'center',
     fontSize: 12,
-    color: '#999',
-    marginBottom: 25,
+    color: '#a6a6a6',
   },
   bottom: {
     flexDirection: 'row',
     width: width - 20,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    height: 40,
+    marginTop: 29,
   },
   buttonGroup: {
     flexDirection: 'row',
@@ -146,11 +144,11 @@ export default class PictureCard extends Component {
           <View style={[styles.buttonGroup, styles.operationGroup]}>
             <TouchableOpacity onPress={this.toggleLike}>
               <Image style={styles.heart} source={this.state.liked ? HEART_FILL : HEART} />
+              <Text style={styles.heartsCount}>{data.get('like_count')}</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={this.toggleCollect}>
               <Image style={styles.collect} source={this.state.collected ? COLLECTED : COLLECT} />
             </TouchableOpacity>
-            <Text style={styles.heartsCount}>{data.get('like_count')}</Text>
             <Image style={styles.share} source={SHARE} />
           </View>
         </View>
